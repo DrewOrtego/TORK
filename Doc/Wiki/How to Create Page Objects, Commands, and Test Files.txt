@@ -1,0 +1,278 @@
+TORK creates layers of functionality to separate the creation of page objects and commands.
+This helps compartmentalize the disparate parts that encompass TORK, allowing for faster development of the parts which change often, and the more focused development of the parts which rarely change.
+Thus, understanding one part doesn't necessarily require an understanding of the entire framework.
+
+This tutorial will guide you through the two most frequent work flows: transcribing a web page to a page object, and creating commands for that page.
+
+### You Will Learn How To
+* Create a new Page Object for IMDb's homepage
+* Create custom commands for the search bar and search button
+* Start an Interactive Session and verify that the commands work as expected
+* Design a test file and run it in Automated Mode
+* Review results of a test session on a web application
+
+### What You'll Need
+* Firefox
+* TORK and all requirements downloaded/installed
+
+### Building a PageObject
+Our goal is to automate searching for movies on [IMDb's home page](https://www.imdb.com/), so let's visit that page since before we transcribe it into a Page Object.
+
+To "manually" search for a movie we'll need to enter some info into the search bar, featured at the top of IMDb's homepage.
+Press the <enter> key or click the search button to get IMDb's results.
+Try it out now and you should be brought to a "results" page for your search.
+
+Now that we have established our work flow, we need to tell TORK how to do recreate it for us.
+This starts with designing a Page Object.
+The "PageObjects" directory has a file called "IMDbHome.py" which we'll use for this tutorial.
+Here's a look at that file's content:
+
+```
+class IMDbHome:
+    """
+    Page Object for https://www.imdb.com/
+    """
+    def __init__(self):
+        self.id = 'https://www.imdb.com/'
+        self.wait_element = '//input[@id="navbar-query"]'
+        self.wait_method = 'visible'
+
+        self.page_elements = {
+            'search-bar': '//input[@id="navbar-query"]',
+            'search-button': '//button[@id="navbar-submit-button"]'
+        }
+
+        self.dynamic_elements = {
+
+        }
+
+        self.window_elements = {
+
+        }
+
+        self.frame_elements = {
+
+        }
+```
+
+A TORK Page Object file always consists of at least one class which bears the same name as its file.
+That class has an ```__init__``` method and few required attributes:
+* ```self.id```: the full or partial pattern used to identify a unique URL
+* ```self.wait_pattern```: an XPath expression TORK uses to determine if the page has finished loading yet or not
+* ```self.wait_method```: the selenium-based method used to detect the state of the element in ```self.wait_pattern```
+
+The ```wait_pattern``` and ```wait_method``` attributes are used to determine if the page is fully loaded or not.
+Since we're designing our initial tests around IMDb's search bar, we'll want TORK to verify that the search bar is visible before accepting subsequent commands.
+We do this by setting ```self.wait_pattern``` to ```'//input[@id="navbar-query"]'```, which represents the search bar itself.
+Then we set ```self.wait_method``` to ```"visible"``` so that TORK will wait until the search bar is visible before accepting new commands.
+
+This syntax is derived from the DOM-representation of the search bar.
+You can check that representation if you open the [IMDb home page](https://www.imdb.com/), right-click the search bar and select "Inspect Element":
+
+![IMAGE NavDOM](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/NavDOM.PNG)
+
+### Adding Commands
+Using the Developer Console's Inspector window, we can dive into the DOM to develop XPath expressions for the elements we want to control.
+Since we already have the search bar, let's test out the expression using the browser.
+
+Open the Console in Developer Tools and paste the following:
+(Note, you might need to type "allow pasting" into the console before the browser allows you to paste anything.)
+
+```
+$x('//input[@id="navbar-query"]')
+```
+
+This is Firefox's syntax for running an XPath function.
+If you're unfamiliar with XPath, check this Wiki for tutorial's and best practice's.
+
+When you run this command, you should get the matching element, like so:
+
+![IMAGE XPathRun](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/XPathRun.PNG)
+
+Hover over the result to see the search bar become highlighted.
+That means it's working!
+
+Since we want to automate the process of entering text into the search bar, we'll make that XPath expression into a command.
+This is done in the ```self.page_elements``` dict, and the work flow is fairly straightforward: pair a command with the XPath-matched element with which it will be associated.
+There are already two commands ready to be used: ```'search-bar'``` and ```'search-button'```.
+
+Now we're ready to test this out in Interactive Mode!
+
+### Testing the Page Object and Commands
+Use the following parameters to run ```main.py```:
+
+```
+-i firefox https://www.imdb.com/
+```
+
+> If you get an error message, you might not have the webdriver configured correctly.
+Check the [setup Wiki page](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Getting-the-System-Requirements) for more info on how to fix this.
+
+Once the IMDb page loads, TORK should recognize it, and you can start the two aforementioned commands.
+Let's quickly test whether TORK recognizes the commands we've created for this page by running the following:
+
+```
+help page
+```
+
+You should get output from TORK showing the two commands in IMDbHome.py's ```self.page_elements``` attribute.
+Assuming this worked correctly, test the first command with the following input:
+
+```
+fill search-bar "Eraserhead"
+```
+
+The search bar should now have the word "Eraserhead" in it, and you'll see some results in the "suggestion" pop-up:
+
+![IMAGE SuggestPopUp](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/SuggestPopUp.PNG)
+
+Now tell TORK to click the search button with the following command:
+
+```
+click search-button
+```
+
+If all went according to plan, you should be on the "Find" page and looking at the results of our search.
+A Page Object for this result page has been created already, and it has a single command in it.
+Open that file-- "IMDbFind.py"-- in your IDE or text editor and run the following command:
+
+```
+help page
+```
+
+You should see that ```result-titles``` command is listed in the console's help-results.
+The XPath expression for this command is designed to get the section of the search results which contain the titles of movies.
+Therefore, we can use it with an assert-command to check whether it contains the results we expect.
+To demonstrate, run the following:
+
+```
+assert_contains result-titles "Eraserhead" 2
+```
+
+If this command works properly you won't see any output, just the next command prompt.
+The takeaway here is the following:
+* TORK updated the available page-commands based on the URL in the browser
+* The XPath for the commands reflects the usage of they're associated elements (e.g. ```result-titles``` is designed to be used with assertion commands)
+* The ease of which new Page Objects and commands can be created
+
+Now that we've successfully used IMDb to search for a movie and get results, we can automate this process by commiting our commands to a test file.
+
+### Automating Work Flows in a Test File
+When TORK wants to use a test file, it has to run in Automated mode instead of Interactive mode.
+Automated mode leverages the settings in ```main.py``` to determine where test files are stored, and which ones should run.
+A second file-- ```main_tutorial.py```-- contains everything you'll need to run a test file automatically.
+Let's take a quick look at the content:
+
+```
+import os
+import sys
+
+if sys.argv[1].lower() not in ['-a', '-i']:
+    print("ERROR: Missing argument for Automated (-a) or Interactive (-i) Mode.")
+
+elif sys.argv[1].lower() == '-i':
+    from SessionClasses.InteractiveManager import InteractiveSession
+    InteractiveSession()
+
+elif sys.argv[1].lower() == '-a':
+    from SessionClasses.AutomatedManager import AutomatedSession
+    parameters = {
+        'IMDb_Tutorial': {'endpoint': 'https://www.imdb.com/', 'args': []}
+    }
+    AutomatedSession(
+        assertion_levels=['sanity'],
+        verbose=False,
+        log_file_dir=r'C:\UI-log',
+        test_file_dir=os.path.join(os.getcwd(), os.pardir, 'Portal-UI-Test-Files'),
+        parameters=parameters,
+        browsers=['firefox'],
+        selected_test_files=[
+
+        ],
+        database=r'b',
+        tasks={
+            'Tutorial': [
+                'IMDb'
+            ]
+        }
+    )
+```
+
+The docstring in ```main_tutorial.py``` explains each parameter in the file, but we'll quickly review the most important parts in a logical order:
+* ```test_file_dir```: the root directory for the test files
+* ```assertion_level```: the next directory level after root (most testing paradigms feature "sanity" and "release" levels of tests)
+* ```tasks```: the deepest directory levels. In this instance, the ```Tutorial``` folder contains an ```IMDb``` folder which contains one or many test files
+* ```browsers```: the name of each browser the test(s) will be running in. (Currently Firefox is the only reliable browser, though Chrome will probably work too)
+* ```log_file_dir```: the file path for the log which will contain all info about the tests and their results as TORK runs
+
+Run ```main_tutorial.py``` by providing the ```-a``` flag, like so:
+
+```
+python <path to main_tutorial.py> -a
+```
+
+You should now be able to sit back and watch TORK open Firefox and run all the commands we tested earlier.
+The console output should resemble the following:
+
+```
+Log file path found: C:\UI-log
+sanity firefox {'endpoint': 'https://www.imdb.com/', 'args': []}
+Created log file: C:\UI-log\UI 2018-10-15 14.25.38 firefox sanity.log
+https://www.imdb.com/
+firefox, sanity
+
+* FILE: \sanity\Tutorial\IMDb\search_test.txt
+* Pass
+
+END OF SESSION
+```
+
+If you navigate to the printed log-file path you'll find similar info in the .txt file.
+Hopefully everything passed, but if not, TORK will tell you exactly which command failed and why/how.
+
+And with that, we're done!
+We've successfully reviewed the creation process for two Page Objects, the commands they'll utilize, and how to automate testing those commands to get some results.
+
+### Configuring the Web App
+TORK can help summarize results on a website, not just a log file.
+This is not required to use TORK, but it is very useful when someone in your organization is reviewing a lot of tests, as opposed to a dense log file.
+Using the Flask-based site provided in the "WebApp" directory, you can review results easily, and share them with colleagues.
+They can do the same!
+
+Run the ```main_tutorial.py``` file again, but before you do, fill out the ```database``` string to be a path on your system, like so:
+
+```
+database=r'C:\ui-databases\IMDbTest.db',
+```
+
+Once TORK finishes running, you should see this SQLite database file created in the directory you specified.
+Assuming you've installed Flask (see "requirements.txt" for all required modules) you can now open the web app.
+Run the "WebApp\app.py" file:
+
+```
+python <path to app.py>
+```
+
+You should see output similar to this:
+
+![IMAGE WebAppConsole](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/WebAppConsole.PNG)
+
+Now open your browser and open a URL formatted with your machine's name as the domain.
+For example, if the machine's name is "TORKRunner", then ```TORKRunner.com``` should now open the web app.
+If all went well you'll see a table with at least one test session listed in it.
+
+![IMAGE WebAppPage](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/WebAppPage.PNG)
+
+Explore this page to understand how it conveys information, and start with the "results" link.
+Once you begin to run multiple tests, you'll see how useful it can be to utilize this web app.
+
+> Take precautions when you run the web app to ensure that you aren't making any proprietary or otherwise private information public.
+You might need to explore how Flask works in order to achieve this, specifically the ```app.run``` function found at the bottom of "app.py".
+In general, as long as you're not running the web app on a web server, you should be fine.
+Flask creates its own small server which enables it to run on individual machines, and that should be sufficient for most test sessions.
+
+### Related Resources
+* [Understanding the Page Object Class](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Page-Object-Class)
+* [Understanding the Dynamic Element Attribute](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Dynamic-Element-Attribute)
+* [Learning XPath](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Learning-XPath)
+* [Writing XPath for ArcGIS Online and Portal](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal)

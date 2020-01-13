@@ -1,0 +1,112 @@
+### What You'll Learn
+The following high-level tutorial will teach you how to:
+* initialize automated mode
+* configure main.py to run one or more test files
+* utilize the custom ```arg``` command
+* design your test file directory
+* run the same tests on different sites
+
+In the last tutorial, you created your first test file.
+The next step is to configure the framework to run that file automatically so that you never have to type it out again.
+This is made possible by running a test in [Automated Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#automated-mode).
+Recall that the goal of every test is to run anytime an update is released, ensuring that a work flow functions the same (successful) way in case any unintentional changes (aka bugs) have been implemented.
+
+### Configuring main.py
+To get your file recognized by the framework, you'll need to tell [main.py](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/main.py) how to find it.
+If you're not familiar with this file yet, review the docstring in it.
+It will explain what each parameter does and how to use it.
+Whether you feel confident in your understanding of main.py yet or not, let's following some simple configuration steps to get your file running in Automated Mode.
+
+In main.py, look for the line where a new ```AutomatedSession``` class is instantiated, [somewhere around here](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/main.py#L78).
+The arguments sent to the AutomatedSession object are those which you will be editing.
+These will tell the file which tests to run, or more specifically, which test-containing folders to access when looking for test files.
+
+Let's say you have the following constraints for the test file you wrote:
+* The test is very basic, so you want to include it in "sanity" testing-- those tests which are concerned with the most rudimentary functionality of the UI.
+* You'd like to verify that this test is passing with both Firefox and Chrome browsers.
+* Since this test isn't specific to any analysis tool, you'd like to store it in a "General" folder. Organizing test files according to their purpose is good practice.
+
+To account for the first constraint, modify the ```assertion_levels``` list to contain the string ```'sanity'```.
+
+For the second, modify the ```browsers``` list to contain two string's: ```'firefox', 'chrome'```.
+
+For the final constraint we'll need to update two things: the folders located in the ```test_file_dir``` path and the ```tasks``` dictionary.
+These two arguments are related in that main.py will build all paths to the ```tasks``` items using ```test_file_dir``` as the root directory.
+
+So first, verify that you have populated ```test_file_dir``` with the root directory for all your test files.
+It should reflect the folder structure seen in the [test file repository](https://devtopia.esri.com/andr7495/Portal-UI-Test-Files) so that this framework can accurately parse it.
+Second, create a folder in the _sanity_ directory for general testing-- call it _General_-- and a subfolder called _SignIn_. Copy your test file into the _Signin_ directory.
+Your test directory structure should now look like this:
+
+```
+test_file_dir root\
+|
+| -- Sanity\
+|   |
+|   | -- General\
+|   |    |
+|   |    | -- SignIn\
+|   |    |    |
+|   |    |    | -- test file.txt
+|   |    |
+|   |
+|
+```
+
+With the directory tree completed, we'll update the ```tasks``` dictionary so that the framework can find the test file. Add a key called ```General``` and give it a value of list.
+Inside the list, add the string ```SignIn```.
+Notice how these names reflect the aforementioned folder names we created. Now the framework will run all the test files found within the Sanity\General\SignIn directory.
+
+The last step is to make sure that the key/value pairs in the ```tasks``` dictionary are uncommented.
+Any commented code will be ignored, as expected. It's good practice to use comments instead of outright deleting code in case you want to run other tests in the future.
+IDE's such as PyCharm make it easy to batch-comment/uncomment multiple lines of code with a single keystroke, so I recommend learning the shortcut for that in whichever IDE you prefer.
+
+### The ```selected_test_files``` Parameter
+If you had multiple files in the _SignIn_ directory and you wanted to run _only_ the test file you've created here, you can utilize the ```selected_test_files``` list.
+In it, specify a string with the name (and optional extension) of your test file, and uncomment the directory in ```tasks``` where that test file is located.
+Now the framework will scan over all the directories specified in ```tasks``` to find that test file's name, and it will only run that file.
+You can add more files to the ```selected_test_files``` list to run those as well.
+
+### The ```parameters``` Dictionary
+This dictionary tells the framework which sites to test.
+It does this by iterating over the dictionary and starting a new automated session for each item in it.
+
+```parameters``` has one required key, ```endpoint```.
+This contains the URL which the framework will navigate to when the automated session starts.
+This allows you to control not only which sites your automated session will test, but also which pages the session needs to start on for your test files to work properly.
+
+### The ```args``` Command
+There's an optional key, ```args```, whose value is a list containing strings.
+The framework will convert each element in the list to a command using the naming convention ```arg_0``` for the element at index 0, ```arg_1``` for index 1, etc.
+The purpose of this is to allow the same test file to work on different sites even if unique login credentials are required.
+
+Let's look at an example of how this is done and why it's important.
+
+``` python
+parameters = {
+        'GPPortal': {'endpoint': 'https://gpportal.esri.com/portal/home/signin.html', 'args': ['some_username', 'drowssap']},
+        'DevExtHive0': {'endpoint': 'https://devext.arcgis.com', 'args': ['another_username', 'P@$$w0Rd']}
+```
+
+The dictionary's each contain an endpoint which contains a URL.
+One points to an ArcGIS Enterprise (aka Portal) site, and the other to an ArcGIS Online site.
+The test writer wants their test file to work on both Portal and AGOL, but both sites use different credentials to sign in.
+Therefore, the test file cannot contain those credentials (e.g. ```fill username "some_username"```) because only one site will recognize those credentials.
+The solution is to provide those credentials in the form of "Session Arguments" using the ```args``` dictionary.
+The test's login workflow will work if it looks like this:
+
+```
+fill username arg_0
+fill password arg_1
+```
+
+```arg_0``` receives "some_username" for the GPPortal session, and "another_username" for the DevExtHive0 session.
+Then ```arg_1``` receives the respective password's.
+
+Now is a good time to mention that the framework cannot obfuscate login credentials, so it's good practice to either keep a local-only main.py file for yourself, or ensure that main.py isn't saved on any public repo.
+
+### Wrapping Up
+Once main.py is configured, you can run the framework in automated mode by providing the ```-a``` flag.
+You can [read more about that here](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#automated-mode).
+
+Scheduling automated runs is the cornerstone of good testing, so set your system up in anyway you choose to do this, and you'll be alerted of potential bugs ASAP!

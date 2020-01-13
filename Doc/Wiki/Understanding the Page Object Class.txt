@@ -1,0 +1,122 @@
+### What is a Page Object?
+Page Objects are code that represent a web page.
+Most sites have more than one page that you can visit, and this framework uses Page Objects to keep track of which page you (or more accurately, TORK) are currently visiting.
+If you are creating a new Page Object, include the attributes below to ensure that it complies with the framework.
+
+### File and Class Names
+A TORK Page Object consists of at least one class whose name is identical to its file name, aside from the ".py" extension.
+This allows TORK to easily identify files whose attributes need to be imported, which updates the current commands at any given time.
+
+This pattern allows enables the use of additional commands for a Page Object.
+The "Commands" directory typically has a sub-directory named after a Page Object.
+This pattern is used to distinguish between different command files used by different Page Objects, and also allows for identical commands to be used on different pages.
+
+When creating a Page Object, make sure the file name and the class name are identical.
+
+### Methods
+Page Objects only require one method, "__init__".
+All attributes are stored in here, unless you want to design a global variable to be used among the attributes.
+
+### Attributes
+_Note: all of the non-dict attributes are required._
+
+#### self.id (string)
+The pattern used to identify a unique web page.
+This pattern is derived from the URL, and is typically a part of the path or the query since these are the parts of a URL which are unique.
+
+#### self.wait_element (string)
+An XPath expression for an element on the page.
+The purpose of this expression is to tell the page to wait until the element is visible or click-able before accepting subsequent commands.
+If the expression does not yield an element, a warning is printed, and TORK will begin accepting new input.
+
+#### self.wait_method (string)
+Specifies the type of wait method used to detect the ```wait_element```.
+PortalClasses/Wait.py has the different wait functions which correspond to the method used to verify a page is ready.
+Those are:
+
+ 1. ```click```: verifies that an element is clickable.
+
+ 2. ```visible```: verifies that an element is visible.
+
+#### self.dynamic_elements (dict)
+A dictionary used to import command files as needed.
+There is [extensive documentation](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/The-Dynamic-Element-Attribute) on how this is used.
+The dictionary can be empty if there is no need for it.
+Otherwise, each key is paired with a list-type value, which contains XPath-expression strings.
+
+#### self.frame_elements (dict)
+If an element is located within an iframe, Selenium will need to switch that iframe before attempting to interact with the element.
+You can map an element to an iframe using this attribute.
+
+For example, if you have the following ```page_elements``` dict:
+
+```
+self.page_elements = {
+    'username': '//input[@id="user_username"]'
+}
+```
+
+and the ```username``` command is contained in an iframe element, you'll need to create the following ```frame_elements``` dict to make ```username``` accessible:
+
+```
+self.frame_elements = {
+            'iframeName': [
+                'username'
+            ]
+}
+```
+
+#### self.page_elements (dict)
+The commands available for a page at all times.
+If a button is always visible on a page, you would create its command/XPath pairing here.
+
+For example, here is a ```username``` command which points to an input-element in the DOM:
+
+```
+self.page_elements = {
+    'username': '//input[@id="user_username"]'
+}
+```
+
+#### self.window_elements (dict)
+Although not required, this dict is helpful for providing feedback pertaining to sub-element commands.
+The commands contained in this attribute are those found within menu-like elements on a page.
+
+These commands are typically handled by the ```self.dynamic_elements``` dict, but this provides an alternative to that since ```self.dynamic_elements``` has a small bit of lookup overhead to it.
+Another difference between the commands here are the ones in ```self.dynamic_elements``` is that these commands will always be listed in the ```help``` output for the ```page``` (including the key).
+Thus, if you want to design a Page Object and make obfuscated commands easy to find, this is the perfect place to list them.
+
+A good example of how to use this dict would be to design a search button contained within a generalized search menu, like so:
+The page element dict...
+```
+self.page_elements = {
+    'header_signin': '//*[@id="login-link"]'
+}
+```
+and the window elements dict:
+```
+self.window_elements = {
+            'header_search': {
+                'search_all': '//*[text()[contains(., "Search All Content")]]'
+            }
+}
+```
+
+The ```help page``` output will look like this:
+```
+Page Commands:
+    header_search
+
+Contained Elements:
+*  header_search:
+    search_all
+```
+
+The message displayed for the user when ```search_all``` is not visible is thus:
+```
+> click search_all
+Unable to click the element: //*[text()[contains(., "Search All Content")]]
+The element is likely within a drop-down menu or pop-up s window which must be clicked before it is available.
+```
+
+Note that although this dict's key-name's are irrelevant, but it is recommended that you name them purposefully so that the ```help``` output is informative.

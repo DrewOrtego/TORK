@@ -1,0 +1,64 @@
+TORK runs in one of two ways: Interactive or Automated Mode.
+Interactive is used primarily for testing commands before committing them to a test file.
+Automated runs the test files and reports their success or failure.
+
+If you haven't configured your Python installation to run TORK yet, refer to the [Getting Started](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Getting-Started) Wiki page.
+
+### Interactive Mode
+When you begin using TORK for the first time, this is the mode you will want to use.
+It is a console-based interpreter for the framework, allowing you to enter commands one at a time, and review their output.
+The output will tell you if you made a mistake, if the input is unrecognized, or it will run your command.
+No matter what the output, you will be prompted for the next command.
+
+To start TORK in Interactive Mode, use the -i flag.
+When you do this, TORK will ask you for two things: a browser name, and a Portal or AGOL url.
+If these arguments are provided in the command line, then TORK will not ask you for them.
+The url needs to be the page you want to start testing on.
+(For the Online Analysis team, this is typically the signin page.)
+
+```-i firefox http://arcgis.com/signin.html```
+
+If all goes well, you should see a new instance of your specified browser appear which will immediately open the provided url, and the console will await your input.
+
+Here are a few notes on functionality in Interactive Mode:
+* You are free to navigate the browser using your mouse and keyboard as well as the console. This gives you the freedom to test scenarios that might not be coded yet by interacting with elements which do not have associated commands.
+* TORK only recognizes specific pages, and right now those are within Portal and ArcGIS Online.
+* You can use another instance of a browser at the same time TORK is running. TORK only interacts with the browser which it opens.
+* Since TORK (technically Selenium) opens a new browser, passwords, cookies, and other data are not available to it. Don't expect any settings you've made to your browser to permeate into TORK's temporary instance.
+
+For more information on using Interactive Mode, refer to the tutorial, [Using Interactive Mode to Design and Write Test Files](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files).
+
+### Automated Mode
+This mode is used to run test files which contain commands for TORK.
+All the commands are the same as the ones accepted by Interactive Mode; both modes utilize the same code for recognizing commands.
+Automated mode can be started with the -a flag:
+
+```-a```
+
+Notice that no parameters follow the -a flag; the configuration for an automated session is done in [main.py](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/main.py).
+See the doc-string in that file for more information on the parameters.
+
+Unlike Interactive Mode, you'll need to have a test file directory set up.
+You can clone [this repo](https://devtopia.esri.com/andr7495/Portal-UI-Test-Files) for all existing test files.
+Likewise, you can use your own directory, but it will have to reflect the directory structure found in that repo in order for the framework to find your test files.
+
+### How This Framework Handles Tests
+Testers typically differentiate between "tests" and "assertions".
+It's important to understand what those words mean to _this_ framework.
+
+A "test" is a file containing one or more commands, any number of which can be an assertion-command.
+An "assertion" is a specific type of command, and it verifies whether something is true or false.
+In the case of the command ```assert_clickable button_one```, we see that the framework is checking whether or not a button element is able to be recognized by a mouse device.
+
+This framework will attempt to run all of the commands in a test file, regardless of whether or not you have chosen to include an assert-command.
+However, as soon as one of the commands raises an exception-- either because of a failed assertion or failed non-assertion command-- the test is considered to have failed.
+Thus, a test file does _not_ require an "assert command" to be considered effective.
+
+In summary, you can include zero-to-many assertions in a test file and have a complete test.
+However, using an assertion can help verify intent within a test file.
+This use of assertions will help you organize all of your tests by purpose, and help you avoid repeating work flows in more than one test file.
+We'll look into this some more in the [Writing and Running Tests](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-and-Running-Tests) section.
+
+For more information on using Automated Mode, refer to the tutorial, [Using Automated Mode to Run Test Files](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Automated-Mode-to-Run-Test-Files).
+
+If you'd like to get started on writing a test file for ArcGIS Online or Portal, refer to the tutorial, [Writing a Complete Sanity Test File](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File#the-completed-test-file).

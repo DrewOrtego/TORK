@@ -1,0 +1,120 @@
+### What You'll Learn
+The following high-level tutorial will teach you how to:
+* write a basic test file
+* test commands before committing them to a file
+* improve existing test files
+* run a test file automatically
+* modify the framework's configuration file to run only the tests you want
+* modify your test-file directory
+
+### Before You Begin
+A test is only as useful as the intent behind it.
+Writing a good test means _choosing_ the work flow used by that test.
+In order to choose a good work flow, you'll need to know as much as possible about what you're testing, and how you're testing that thing.
+This Wiki entry will teach you how the testing works in this harness, and how to get the most out of your tests with minimal effort.
+To make those tests, you must understand the easiest way to design them, and that means utilizing Interactive Mode.
+
+An Interactive Session will help guide you into making logical design choices.
+Refer to the Wiki if you're not familiar with how to run the harness in [Interactive Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#interactive-mode).
+Once you have successfully opened the harness in Interactive Mode, proceed to the next steps.
+
+### Designing a Test In Interactive Mode
+Now that you're in [Interactive Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#interactive-mode), you can figure out which commands are valid and which are not.
+The [```help```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#help-default_parameter-see-list-of-options) command will tell you which commands are available to you based on the visible elements on a page.
+Let's start with the Portal signin page since that's the first one that opens for any type of session.
+Type ```help page``` into the console and press return.
+You should see a list of commands appear, similar to this:
+
+![Help command](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/help1.PNG)
+
+The "Page Commands" listed here refer to commands which are associated with visible elements in the browser's current page.
+(Specifically, the current page's DOM.)
+To find out which element is associated with a command, pick a command from the ones listed by ```help``` and use it with the [```id```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#id-page_element) command.
+Try that now with ```id <name of the page command>``` and watch the page immediately after you execute this command.
+Did you see the something flash yellow?
+If so, then you now know which page command is associated with the page element.
+
+#### The First Test
+Your first test could involve filling out the username and password on the signin page (the default starting page for all test sessions), then clicking the sign-in button to login to a site.
+That could look something like this:
+
+```text
+fill username "agent_cooper"
+fill password "room315"
+click signin
+```
+
+Enter those commands one at a time into the Interactive Session's console.
+They probably didn't work too well since the credentials are made up, but feel free to use your own and judge whether the work flow was successful at logging you in.
+
+Assuming no exceptions are thrown from any of those commands, you've designed a successful test!
+However, this test doesn't indicate whether the expected results of these actions was expected or not.
+We can make this test much more meaningful by writing an assertion.
+
+#### Adding Assertions
+There are many assertions available, but let's use the one which checks which page we're on after clicking ```signin```.
+That would be the [```assert_title```](Commands) command, and it looks like this:
+```text
+fill username "agent_cooper"
+fill password "room315"
+click signin
+assert_title "Twin Peaks Visitors Guide"
+```
+
+Try running those commands now but modify the strings to reflect your own credentials and the title of the page which appears after running the ```click signin``` command.
+If nothing is reported in the console, then everything worked as expected.
+It is only when something _unexpected_ happens-- such as an exception being thrown-- that the framework reports its findings.
+
+See if you can get the work flow working as expected, then save the commands to a test file.
+Use the extension ```.txt``` since that's the one the framework looks for when searching for test files to run.
+We'll talk more about running files in the "Automated" section below.
+
+### Improving a Test File
+Our test has one assertion at the moment, but you could include multiple assertions to check that each step is properly sending information to the browser, like this:
+
+```text
+fill username "agent_cooper"
+assert_text username "agent_cooper"
+fill password "room315"
+assert_text password "room315"
+click signin
+assert_title "Twin Peaks Visitors Guide"
+```
+
+You can even clean this up a bit by including blank lines and comments. Both are recognized-- and subsequently ignored-- by the framework.
+```text
+# This test file verifies that the username and password are filled out correctly,
+# then checks the page which is opened upon signing-in.
+
+fill username "agent_cooper"
+assert_text username "agent_cooper"
+
+fill password "room315"
+assert_text password "room315"  # remember to change this password soon!
+
+click signin
+sleep 5
+assert_title "Twin Peaks Visitors Guide"
+```
+
+#### The ```sleep``` Command and Assertion Pinging
+Notice that a new command-- [```sleep```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#sleep-arbitrary_parameter-number-of-seconds) has been added to the test file.
+This is used to tell the framework to wait for n-number of seconds before executing the next command.
+In this example, the ```signin``` button will navigate the browser to a new page, and it could potentially take at least five seconds to load.
+Since we don't want the ```assert_title``` command to execute before the navigation is complete, it's good practice to use the ```sleep``` command and retain some control over the framework's decision-making process.
+
+However, there's a better way to do this. Assert commands come with a builtin "sleep" functionality. Where ```sleep``` enforces the framework to stop for the provided number of seconds, assert commands will start the framework again once the assertion is true. Otherwise it will wait a second, "ping" the element, and if the assertion fails it try again until the provided time limit it reached. Think of the number you provide to an assert command as the _maximum_ amount of time it will wait until you are prompted for more input. Let's edit our test file to use that:
+
+```
+click signin
+assert_title "Twin Peaks Visitors Guide" 5
+```
+
+Notice that we deleted ```sleep 5``` and updated the assert to include that ```5``` instead. ```Sleep``` is still a useful command, but usually only when we know that the previous command will initiate some behavior that could take time to complete, e.g. loading/rendering a new page or frame.
+
+### Wrapping Up
+The key to writing a good test is to leverage the commands available to you.
+Refer to the [Commands]() documentation for syntax guides and low-level explanations of the commands which are always available to you, plus how to find out which commands are available as you navigate to different pages.
+Use the [```help```]() command to guide you during an Interactive Session, and you'll be committing commands to a test file in no time.
+
+The next tutorial will show you how to create a test file and tell the framework to run it.

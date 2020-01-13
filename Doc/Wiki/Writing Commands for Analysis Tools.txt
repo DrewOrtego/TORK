@@ -1,0 +1,48 @@
+### The Problem This Solves
+Some PageObject modules can have hundreds of commands.
+However, those commands are not necessarily available at all times, depending on which window or frame is currently visible.
+Such is the case with Analysis Tools.
+This creates a problem of providing meaningful help to the user as they navigate the browser, while ensuring that all significant commands are available exactly when they are expected.
+
+To avoid having to cram hundreds of unique commands into a single PageObject, utilize the Analysis Tools directory.
+Utilizing this directory provides the following solutions:
+* Allows use of non-unique commands between tools while maintaining associations between a command and its specific tool.
+* Minimizing file size for PageObject files.
+* Organizing commands by file rather than dictionary name. (Similar to item 1.)
+* Limit the available commands by the current visibility of a window or frame. This makes the ```help``` command more helpful.
+
+### Requirements
+1. A directory for an Analysis Tool's category created in the _Additional Commands_ directory.
+2. A .py file whose name matches the Analysis Tool. This is case sensitive and the casing much match what you see in the tool's pane in the UI. Spaces and punctuation are forbidden. :guardsman:
+3. A single dictionary in the .py file assigned to an arbitrary variable. (The name of the variable doesn't matter.)
+The Additional Command directory looks like this:
+
+```
+Portal UI Harness\
+|
+| -- PageObjects\
+|    |
+|    |  -- Additional Commands\
+|    |    |
+|    |    | -- WebMap.py
+|    |    |
+|    |    | -- WebMap\
+|    |    |    | -- GeoAnalytics Tools\
+|    |    |    | -- Raster Analysis\
+|    |    |    | -- Standard Tools\
+|    |    |    |    | -- CreateViewshed.py
+|    |    |    |    | -- GeocodeLocationsfromTable.py
+```
+
+When a user browses to the CreateViewshed tool, the additional commands found in _CreateViewshed.py_ will be made available to them.
+These are visible via the _help_ command.
+If there is an error importing or parsing the .py file's content, or if unexpected attributes are found, a message is printed to the console.
+
+### How It Works
+For all Analysis Tools, TORK will recognize when a specific tool has been opened by it's a) category name (GeoAnalytics Tools, Raster Analysis, or Standard Tools) and b) tool name.
+This is found by getting text from the analysis pane's ```<nav>``` element, seen here:
+
+![AggregatePoints Window](https://i.imgur.com/FAdUjAl.png)
+
+```InteractiveSession.check_for_additional_page_commands()``` checks the current page, and if an if-block exists for that page, page-specific code is executed to get the tool category and tool name.
+Then ```Page.get_additional_page_commands()``` attempts to import the commands from the associated file found in the _Additional Commands_ directory.

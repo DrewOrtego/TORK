@@ -1,0 +1,41 @@
+### Installing Python Modules
+All modules can be installed using the [requirements.txt](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/requirements.txt) file and the command:
+
+ ```pip install -r <requirements file>```
+
+You'll need Python 3.5 or higher to run the framework and the following modules:
+
+- decorator 4.3.0 (or later)
+- flask 0.12.1 (or later)
+- flask_sqlalchemy 2.2 (or later)
+- selenium 3.13.0 (or later)
+
+Depending on your version of Python, you might need to install additional modules.
+It is recommended that you use the framework within a [virtual environment](https://conda.io/docs/user-guide/tasks/manage-environments.html), such as the ones made available with [Anaconda](https://www.anaconda.com/download/) and [MiniConda](https://conda.io/miniconda.html).
+
+### Installing Webdrivers
+Selenium requires a driver to interface with the chosen browser.
+You can get the webdriver for your browser at: [Common WebDrivers](http://selenium-python.readthedocs.io/installation.html#drivers)
+
+In addition, you can find working webdriver files on ```\\qalab_server\pyunit\ArcGISOnline\UI Testing```.
+
+You can save the driver to any location, as long as that location is in your [PATH environment variable](https://www.java.com/en/download/help/path.xml).
+MacOS users might have a different workflow for this.
+
+If you don't want to modify the PATH, another choice is to put it at the project root directory (but don't add it to git, as devtopia doesn't allow binary files)
+
+### Known Webdriver Issues
+Note that the webdriver's have compatibility requirements with Selenium. Before you download a webdriver file, verify that your Python installation and module's version number
+meets the requirements of that file. Sometimes the versions are correct, but compatibility issues still arise. In some cases the framework will crash after throwing an error
+similiar to these:
+
+```
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+```
+
+In this case, try using the previous version of your current webdriver.
+
+After the Python libraries and webdriver(s) are installed, run `main.py` to start the program.
+The framework has two modes of operation, and understanding those is vital to using the framework properly.
+[Read about those modes here](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes).

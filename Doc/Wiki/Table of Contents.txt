@@ -1,0 +1,89 @@
+## An Introduction to TORK
+
+#### [What Is TORK?](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/What-Is-TORK%3F)
+* [Why Use TORK?](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/What-Is-TORK%3F#why-use-tork)
+* [How To Get Started](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/What-Is-TORK%3F#how-to-get-started)
+***
+#### [Getting the System Requirements](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Getting-the-System-Requirements)
+* [Installing Python Modules](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Getting-the-System-Requirements#installing-python-modules)
+* [Installing Webdrivers](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Getting-the-System-Requirements#installing-webdrivers)
+* [Known Webdriver Issues](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Getting-the-System-Requirements#known-webdriver-issues)
+***
+#### [Running TORK for the First Time](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Running-TORK-for-the-First-Time)
+* [Interactive Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Running-TORK-for-the-First-Time#interactive-mode)
+* [Automated Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Running-TORK-for-the-First-Time#automated-mode)
+
+## Writing and Running Test Files
+
+#### [Command Reference](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands)
+* [Parameter Types](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#parameter-types)
+* [General Commands](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#general-commands)
+* [Page Commands](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#page-commands)
+* [Assertion Commands](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#assertion-commands)
+***
+#### [Using Interactive Mode to Design and Write Test Files](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files)
+* [What You'll Learn](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files#what-youll-learn)
+* [Before You Begin](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files#before-you-begin)
+* [Designing a Test In Interactive Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files#designing-a-test-in-interactive-mode)
+* [Improving a Test File](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files#improving-a-test-file)
+* [Wrapping Up](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files#wrapping-up)
+***
+#### [Using Automated Mode to Run Test Files](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Automated-Mode-to-Run-Test-Files)
+* [Configuring main.py](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Automated-Mode-to-Run-Test-Files#configuring-mainpy)
+* [The ```selected_test_files``` Parameter](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Automated-Mode-to-Run-Test-Files#the-selected_test_files-parameter)
+* [The ```parameters``` Dictionary](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Automated-Mode-to-Run-Test-Files#the-parameters-dictionary)
+* [The ```args``` Command](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Automated-Mode-to-Run-Test-Files#the-args-command)
+* [Wrapping Up](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Automated-Mode-to-Run-Test-Files#wrapping-up)
+***
+#### [Writing a Complete Sanity Test File](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File)
+* [Documentation](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File#documentation)
+* [Logging In](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File#logging-in)
+* [Opening a Web Map](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File#opening-a-web-map)
+* [Adding Data to the Map](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File#adding-data-to-the-map)
+* [Opening the ExtractData Tool](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File#opening-the-extractdata-tool)
+* [The Completed Test File](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File#the-completed-test-file)
+***
+#### [Saving Test Files to GitHub](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub)
+* [Requirements](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub#requirements)
+* [Setting Up a Working Folder](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub#setting-up-a-working-folder)
+* [Cloning a Project](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub#cloning-a-project)
+* [Creating a Branch and Making Changes](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub#creating-a-branch-and-making-changes)
+* [Add, Commit, and Push](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub#add-commit-and-push)
+* [Opening a Pull Request](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub#opening-a-pull-request)
+* [Merging Changes and Deleting Branches](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub#merging-changes-and-deleting-branches)
+* [Additional Resources](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-Test-Files-on-GitHub#additional-resources)
+
+## Writing XPath
+
+#### [Learning XPath](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Learning-XPath)
+* [The Basics](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Learning-XPath#the-basics)
+* [Testing XPath in Firefox and Chrome](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Learning-XPath#testing-xpath-in-firefox-and-chrome)
+* [Recommended XPath-writing Work Flow](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Learning-XPath#recommended-xpath-writing-work-flow)
+***
+#### [Writing XPath for ArcGIS Online and Portal](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal)
+* [Identifying Dojo's Attributes and Values](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal#identifying-dojos-attributes-and-values)
+* [Finding The "last" Element In An Array](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal#finding-the-last-element-in-an-array)
+* [Identifying Visible Elements with CSS](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal#identifying-visible-elements-with-css)
+
+## Creating Pages Objects
+
+#### [Creating and Testing Page Objects and Commands](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands)
+* [You Will Learn How To](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands#you-will-learn-how-to)
+* [What You'll Need](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands#what-youll-need)
+* [Building a PageObject](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands#building-a-pageobject)
+* [Adding Commands](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands#adding-commands)
+* [Testing the Page Object and Commands](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands#testing-the-page-object-and-commands)
+* [Automating Work Flows in a Test File](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands#automating-work-flows-in-a-test-file)
+* [Configuring the Web App](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands#configuring-the-web-app)
+* [Related Resources](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Creating-and-Testing-New-Page-Objects-and-Commands#related-resources)
+***
+#### [Understanding the Page Object Class](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Page-Object-Class)
+* [What is a Page Object?](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Page-Object-Class#what-is-a-page-object)
+* [File and Class Names](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Page-Object-Class#file-and-class-names)
+* [Methods](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Page-Object-Class#methods)
+* [Attributes](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Page-Object-Class#attributes)
+***
+#### [Understanding the Dynamic Element Attribute](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Dynamic-Element-Attribute)
+* [Introduction](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Dynamic-Element-Attribute#introduction)
+* [The Basics](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Dynamic-Element-Attribute#the-basics)
+* [Dynamic File-Naming](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Dynamic-Element-Attribute#dynamic-file-naming)
