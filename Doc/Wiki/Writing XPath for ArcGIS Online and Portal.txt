@@ -1,0 +1,100 @@
+ArcGIS Online and Portal both use Dojo v.1 to generate their respective DOM.
+Understanding the attributes Dojo commonly uses will help you build unique identifiers for all DOM elements.
+First though, let's talk a bit about XPath
+
+### Identifying Dojo's Attributes and Values
+ArcGIS Online and Portal both use Dojo v.1 to generate their respective DOM.
+Understanding the attributes Dojo commonly uses will help you build unique identifiers for all DOM elements.
+Let's look at an example.
+
+First, open the Dojo test forms, seen here: https://download.dojotoolkit.org/release-1.14.1/dojo-release-1.14.1/dijit/tests/form/
+
+Second, open "AutoCompleterMixin.html".
+You should see a page open which contains a three drop-down items.
+
+Lastly, open your browsers inspector, and take a look at the drop-down items.
+(You will find them within the ```table``` element whose id="table".)
+Once you drill down into one of the element's location in the DOM, you'll find that many of the ```class``` values contain the word ```dijit```.
+This is an indicator that you are working with Dojo, and these values can be leveraged to write many XPath expressions.
+
+For example, the XPath expression for the first drop-down item can be written like this:
+
+```
+'//body//table[@id="table"]//tr[2]//td[2]//div[contains(@class, "dijitValidationTextBox")]//div[contains(@class, "dijitDownArrowButton")]//input[contains(@class, "dijitArrowButtonInner")]'
+```
+
+This expression can be simplified by removing the redundant ```div``` identifiers:
+
+```
+'//body//table[@id="table"]//tr[2]//td[2]//input[contains(@class, "dijitArrowButtonInner")]'
+```
+
+Very manageable!
+By focusing on the ```dijit```-centric values, writing XPath for Dojo-created pages is a snap.
+***
+### Finding The "last" Element In An Array
+ArcGIS Online and Portal have a unique way of generating DOM elements.
+For example, when a user clicks on the "Aggregate Points" (henceforth AP) tool, the left-hand pane is populated with all the parameters and options for running that tool.
+What user's don't see is that a new set of DOM elements is generated each time that tool is opened.
+This is a behavior of Dojo, but it is easy to work with when tracking down the exact DOM element you want.
+
+For example, here's what the DOM looks like the first time you open the AP tool:
+
+![DOM Before](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/DOM_before.PNG)
+
+And here is it after closing and opening it again:
+
+![DOM After](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/DOM_after.PNG)
+
+Notice the additional ```div``` element, and that the previous one is disabled, as indicated by the "grayed out" display.
+
+The XPath expression used to get the enabled set of elements for the AP tool must access the last ```div``` in the array of div's generated when AP is opened.
+The same applies to the other tools as well.
+
+Here's an example of how to do that:
+
+```
+'layer-to-aggregate': '(//tr[@data-dojo-attach-point="_selectAnalysisRow"]//table)[last()]'
+```
+
+The expression ```//tr[@data-dojo-attach-point="_selectAnalysisRow"]//table``` will certainly yield an array of all matching results, but selenium will give us the _first_ match in that array, which we now know could be the _disabled_ result.
+Using the ```(<expression>)[last()]``` syntax will capture all the expression-matches in an array, and ```last()``` function returns only the last array element, which is the active ```div```.
+This is similar to accessing indexes in a Python list, where the square brackets are used to indicate which index of the list we want.
+```last()``` ensures that the last index is accessed.
+
+Sometimes you can use the CSS properties to get the same result, but not in every case.
+Fortunately, a newly active tool's elements are _appended_ to the DOM, thus this paradigm should work for all tools.
+
+...but if not, check out the next topic...
+***
+### Identifying Visible Elements with CSS
+When an element has multiple entries in the DOM, typically only one of these entries is visible at any given time.
+If the ```last()``` function isn't properly telling TORK which element to use, adding a little CSS identification should solve that problem.
+
+Example:
+'target-layer' is a command for the JoinFeatures tool, and its XPath expression looks like this:
+```
+/tr[@data-dojo-attach-point="_targetLayerRow"]//table[@widgetid[contains(., "dijit_form_Select_")]]
+```
+
+However, this expression alone isn't enough to repeatedly interact with the 'target-layer' element.
+Interacting with other elements, closing the analysis window, even refreshing the page can render that XPath ineffective.
+Adding the following XPath in front of the existing expression will fix this:
+
+```
+//div[contains(@role, "tabpanel") and contains(@class, "dijitVisible")]
+```
+
+Now the last step is to save that new expression in a variable, and simply concatenate the strings together in the code, like so:
+
+```python
+class MyPageObject:
+  def __init__(self):
+    self.visible = '//div[contains(@role, "tabpanel") and contains(@class, "dijitVisible")]'
+    self.layers = {
+        'target-layer': self.visible + '/tr[@data-dojo-attach-point="_targetLayerRow"]//table[@widgetid[contains(., "dijit_form_Select_")]]'
+    }
+```
+
+Test out your elements by interacting with them between interacting with other elements.
+The visibility of an element may not be entirely predictable, but some quick navigation will help you verify this.

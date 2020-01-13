@@ -1,0 +1,188 @@
+### What is a Macro?
+A Macro is a single command used to run multiple commands. Much like a _function _in any programming language, macros are useful when you have a workflow and you want to use it in many places, but you want to write it only once. We use macros to:
+* Increase the readability of a test file's syntax for a tester, including the author.
+* Decrease the size of a test file to save disk space.
+* Speed up the test-file writing process.
+
+***
+
+### What Does a Macro Look Like?
+Let's look a a common example. The steps to login to a Portal can be written like this:
+``` text
+fill username "drew"
+fill password "drowssap"
+click signin
+```
+
+Encapsulating these instructions into a macro means running them with a single command, such as:
+```
+login "drew" "drowssap"
+```
+
+The latter code sample will execute all of the test code in the former code sample. More complicated macros can be created to execute any number of workflow, but it is generally preferable to keep macros single-purposed and as small as possible.
+
+***
+
+### Macro Configuration
+Every macro you create requires two files. A detailed explanation of how those files work can be found in the next two sections. This section documents a technical explanation of those files and their contents, so refer back to this one while you learn how to create your own macro's.
+
+#### Folder Structure:
+```
+Portal UI Harness
+|
+| -- Commands
+|    |
+|    |  -- Macros
+|    |    |
+|    |    | -- macro_1.txt
+|    |    | -- macro_1.py
+|    |    | -- macro_2.txt
+|    |    | -- macro_2.py
+```
+#### File Naming Conventions
+1. The .txt and .py file associated with a macro must share the same name.
+2. The file names cannot contain any punctuation except for underscores.
+3. The files must be in the Macros directory.
+
+#### The .txt File
+This contains the commands which are recognized by the harness. (e.g. `click signin` or `fill username "admin"`) These resemble the test files, and all of the commands in it are executed when the macro is called by the harness.
+
+#### The .py File
+This file contains metadata about the macro and allows the harness to understand how to run the macro. This file will only contain one dictionary which must be assigned to a variable of the same name as the macro. That dictionary requires the following keys and values:
+```
+'args': an integer greater than or equal to 0. This is the number of arbitrary arguments accepted by the macro.
+'type': a list of one or more strings which match 'command' or 'string'. These refer to the types of arguments expected by the macro, in the order that those arguments are entered.
+    * 'string' is used in cases where a user can enter an arbitrary text command, such as a username or password.
+    * 'command' is used when the macro expects a web element. (e.g. ```signin-button```)
+'help': a list of strings. Each string is associated with an argument, and these should be ordered to match the order in which the arguments are entered.
+```
+
+***
+
+### Creating a Simple Macro
+Before you turn your work flow into a macro, test the work flow in Interactive Mode, or by using multiple test files in Automated Mode. Once you've tested a multi-step work flow-- and it is reliable-- it is perfect for making a macro!
+
+Let's start with a simple one. Our goal is to automate the steps required to open the JoinFeatures tool, and to do that we need to click a few buttons. Here is our code which we want to turn into a macro:
+
+```
+click header-map
+click analysis
+click feature-analysis
+click summarize-data
+click join-features
+```
+
+In the "Macro" directory, create a normal test file which contains these instructions. Give it the name of your macro with the .txt extension. Let's call this one "open_join_features.txt".
+
+Now you'll need to tell the harness how to recognize this file as a command.
+
+In the same directory as "open_join_features.txt", create a .py file with the same name. In it will be a single dictionary with the same name and the following keys:
+
+```python open_join_features.py
+open_join_features = {
+    'args': 0,
+    'type': 'command',
+    'help': ["Opens the JoinFeatures tool from the Organization page. No arguments required."]
+}
+```
+
+Now you can run the macro by entering the command "open_join_features" into the command prompt (during an interactive session) or your test file (for automation).
+
+Macros takes special character '_' only. no other special characters are allowed.
+
+***
+
+### Creating an Advanced Macro
+Some commands accept parameters which allow for customized use of that web element. An example would be the name of the output of a tool. The name must be unique compared to all other services in the organization, and it is up to the user to decide what a good name will be. For this reason, macro's allow you to add parameters.
+
+We've already seen an example of this with the aforementioned ```login``` command. Notice that it accepted two parameters, a username and password. Let's create that macro from scratch.
+
+After testing the work flow, the following commands prove reliable for logging in to Portal:
+```
+click username "drew"
+click password "drowssap"
+click signin
+```
+
+Before we can copy these commands into our .txt file, we'll need to ensure that no one is forced to use the provided username and password. (Plus, making any credentials public knowledge be a problem.) So we'll write the code in our .txt file without those, and instead use empty parentheses, like so:
+```
+click username {}
+click password {}
+click signin
+```
+
+Now that the .txt is complete, save it and give it a unique name. We'll choose "login".
+
+Now we need to create "login.py". It will look similar to the simpler example above, except we need to make a couple of changes. Here's what we'll need:
+
+```python
+login = {
+    'args': 2,
+    'type': 'string',
+    'help': ["username in quotes as argument 1", "password in quotes as argument 2"]
+}
+```
+
+Notice that the number of arguments-- 2-- is specified in the 'args' key. Also, the 'help' key has two indices, and each index corresponds to the order of the arguments as we wrote them in our .txt file. 'username' is argument one, so an explanation of that argument is the first index of 'help'. Same goes for 'password' and the second index in 'help'.
+
+Also, did you notice the 'type' key? We used it when we made a simple macro as well. It tells the harness which type of arguments it should expect: string commands (i.e. arbitrary commands, or those which can be of any value) or commands already programmed into the harness.
+
+Now anyone can use the ```login``` command with their own set of credentials by writing it in a test file or in the console.
+
+***
+
+### Summary of Creating a Macro
+1. Test your work flow until it is reliable.
+2. Choose a unique name to use for the macro. This means it cannot match any commands already used by the harness.
+3. Copy the steps into a .txt file, within your "Macro" directory, and give it the name chosen in step 2.
+4. Design your .py file into the same directory and give it the name chosen in step 2.
+4. Test the macro to validate reliability and expected output.
+5. Share it by merging to GitHub.
+
+***
+
+### Tip and Tricks
+* Explicit is always better than implicit. Don't condense an entire test file into a single macro. Macros help test-readers focus on the purpose of the test, so only include macros which encapsulate the steps needed to get to that test's real purpose.
+
+* Keep it simple. The more complicated a macro is, the more chances there are for its commands to fail. Avoid frequent failures by keeping your macro's .txt files down to 10 lines or less. When a test fails it's better to have it fail on a non-macro command so as to expedite fixing that test, not the macro(s) it uses.
+
+* Pick a unique, but descriptive name. Visualizing each step of the macro's commands, and combine names in a logical fashion. This will make it easier to discern what that macro does when a tester encounters it in a file, and will most likely avoid a non-unique naming error.
+
+* You don't always need a macro. They're handy, but it takes a little practice to make them effective. Write some tests and see if you're repeating a work flow in each of them. If so, make a macro. If not, you'll spend less time writing if you continue to write out each step, and a macro is not needed.
+
+* Keep other testers in mind. You're designing macros to make your job easier, but they can help others too. Pick descriptive names, solve an elusive work-flow related bug, or share your favorite tricks by merging your macros to this repository.
+
+***
+
+###### create set of instructions to be used multiple times as a ".txt"
+    - if the command takes some variable then give that element as {0}
+    - order of commands should be similar as in the lines else the command fails.
+    - NO more than one command per line.
+#### sample.txt
+```text
+fill username {0}
+fill password {0}
+click signin
+verify text view-status "VIEW STATUS"
+```
+#### note: good to have verify command to verify ur actions are valid at each step.
+###### create a python '.py' with the same name
+    - 'count' is the no. of variables for the command, if not specified defaults to 0.
+    - 'type' argument is either simple 'string' or it is another 'command'. if string then no need to specify this.
+    - 'help' is the array of help text that is to say other person what to pass as an argument this command
+###### note: varible name should be similar to file names
+
+#### sample.py
+```python
+sample = {
+    'count': 2,
+    'help': ["username in quotes as argument 1", "password in quotes as argument 2"]
+}
+```
+###### once the files are there then use help to view that command
+```command
+sample -h
+sample "arg1" "arg2"
+```
+
+-h will list the args

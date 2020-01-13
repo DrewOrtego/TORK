@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3>Session Results</h3>
+<h5> {{ results[-1][0][0] }} -- {{ results[-1][0][2] }} -- {{ results[-1][0][1] }} </h5>
+<table class="table table-striped sortable">
+    <tr>
+        <th>Tool Name</th>
+        <th>File Name</th>
+        <th>Details</th>
+    </tr>
+    {% for row in results[:-1] %}
+    <tr>
+        <td> {{ row[2] }} </td>
+        <td> {{ row[3] }} </td>
+        {% if row[4] == 'PASS' %}
+            <td> <img src="../static/images/pass.png" alt="Pass" height="20" width="20"> Pass</td>
+        {% else %}
+            <td> <img src="../static/images/failed.png" alt="Fail" height="20" width="20"> Failed</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

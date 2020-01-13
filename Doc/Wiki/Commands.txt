@@ -1,0 +1,556 @@
+# Parameter Types
+Most commands require one or more parameters.
+Throughout this article you will find those parameters listed with their corresponding functions.
+There are a few different types of parameters, so refer to this section to understand what each function expects.
+
+### String
+Any combination of characters within a pair of double quotes.
+
+These are typically used to fill out text elements in the UI such as login credentials or search boxes.
+
+```
+fill layer-name "GPT_Ash1"
+```
+
+<br>
+
+### Page Element
+Any available command which corresponds to an element on the page.
+
+You can check the ```help "page"``` output for available commands to verify whether a page element is available or not.
+
+```
+click signin
+```
+
+<br>
+
+### Integer
+Any valid integer.
+
+```
+sleep 42
+```
+
+<br>
+
+### Default Parameter
+These are commands which are used as parameters to another command.
+
+No special punctuation is needed.
+
+These are always optional, thus not required to get full usage of the framework.
+
+```
+help assertion
+```
+
+<br>
+
+***
+
+# General Commands
+These commands affect the framework, and not the browser.
+
+<br>
+
+### arg_[x]
+Available in Automated Mode only.
+
+Assigns any strings provided in the ```args``` list from ```main.py``` to its respective ```arg_x``` command, where x is the position in the list
+
+<br>
+
+```
+fill username arg_0
+fill password arg_1
+```
+
+<br>
+
+### end_save
+Ends a save session, if a save session is currently active.
+
+<br>
+
+```
+end_save
+```
+
+<br>
+
+### help (_default_ [see list of options])
+Prints a list of available commands.
+Excellent resource when writing test files using Interactive Mode.
+
+<br>
+
+#### Parameter Options (choose one):
+* browser -- commands which can manipulate elements in the broswer (e.g. ```click```)
+* general -- commands for interacting with the framework. Typically used in Interactive Mode. These do not affect the browser.
+* assertion -- assertion commands for verifying true/false properties the current page.
+* page -- elements in the current page. Includes the results of "window".
+* window -- elements in the current page which are not necessarily always visible. These are usually the elements which are visible after opening a drop-down menu or a pane.
+
+<br>
+
+#### Usage:
+* ```help``` no parameter specified; prints all available commands.
+* ```help page``` parameter specified; prints all the available page and window commands. Note: it is not an string command.
+
+<br>
+
+### pause
+Stops the framework until the user presses the ENTER key.
+
+Useful for debugging in Automated Mode when you want to pause a test file to interact with the browser via peripheral devices.
+
+Can sometimes have unintended behavior in different IDE's.
+
+<br>
+
+```
+pause
+```
+
+<br>
+
+### prompt (_string_)
+Replaces the current prompt string with the provided parameter.
+
+Strips any spaces before or after the non-space characters in the string parameter.
+
+Really encapsulates that text-based game experience!
+
+<br>
+
+```
+prompt "><}}}*>"
+```
+
+<br>
+
+### rerun (_string_)
+Clicks the "Rerun Analysis" (henceforth RA) button for a layer in the content pane.
+
+The string parameter must be a case-insensitive match for the name of the layer whose RA button will be clicked.
+
+The RA button does not need to be visible for this command to work; the underlying function will perform a "hover" action on the layer to make it visible.
+
+<br>
+
+```
+rerun "join_features_test123"
+```
+
+<br>
+
+### save (_string_)
+Begins a save session, which will write any valid and successfully executed commands to the specified file.
+
+Used for assisting in the creation of test files which can be used in an Automated Session.
+
+<br>
+
+```
+save "testFile"
+```
+
+<br>
+
+### sleep (_integer_)
+Tells the framework to wait for n-number of seconds before executing the next command.
+
+Works well when clicking navigational buttons which need to open/render a new page.
+
+The framework has some built-in sleep-type commands, but these are not reliable for _all_ workflows.
+
+You might find that you do not need ```sleep``` in some cases, so experiment with your test files and remember that you can never get too much sleep.
+
+If you wish to stop the framework for an indefinite amount of time, use ```pause```.
+
+<br>
+
+```
+sleep 42
+```
+
+<br>
+
+### try_start
+Starts "try mode" which will ignore any exceptions thrown during the execution of subsequent commands.
+
+Commands will throw exceptions again after the ```try_stop``` command.
+
+<br>
+
+The purpose of this is to allow test files (used in [Automated Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#automated-mode)) to work for multiple test sites which do not share the same work flows.
+
+<br>
+
+For example, if Site A contains an additional login page, any of Site A's test files will need to include instructions to complete the additional login.
+
+Those instructions might not work for Site B.
+
+Therefore, the test file can utilize ```try_start``` and ```try_stop``` to ensure that Site A's signin work flow will not throw an exception when it runs on Site B.
+
+<br>
+
+```
+try_start
+click signin
+try_stop
+```
+
+<br>
+
+### try_stop
+Stops "try mode" after it has been started using the ```try_start``` command.
+
+This will then halt a test file normally whenever an exception is thrown.
+
+<br>
+
+```
+try_start
+click signin
+try_stop
+```
+
+<br>
+
+### quit
+Quits the program.
+
+<br>
+
+```
+quit
+```
+
+<br>
+
+***
+
+# Page Commands
+
+<br>
+
+### back
+Emulates the "back" button in a browser.
+
+Selenium has a caveat for this which basically says that it might not work properly for all browsers.
+
+<br>
+
+```
+back
+```
+
+<br>
+
+### clear (_page_element_)
+Clears the content of the page element, typically used with a text element.
+
+<br>
+
+```
+clear some-text-box
+```
+<br>
+
+### click (_page_element_)
+Emulates a mouse left-click on the page element.
+
+<br>
+
+```
+click ok
+```
+
+<br>
+
+### check_item (_page_element_, _string_)
+Checks an element within a collection of checkboxes.
+
+When the text-pattern of the element matches the (case-insensitive) string-parameter, the corresponding checkbox is clicked.
+
+Repeating the command will uncheck the checkbox.
+
+<br>
+
+```
+check_item analysis_fields "color"
+```
+
+<br>
+
+### double_click_map
+Performs a double-click action on the center of the web map.
+
+Only works on the WebMap page.
+
+<br>
+
+```
+double_click_map
+```
+
+<br>
+
+### fill (_page element_, _string_)
+Sends the string contained inside the string command to the page element.
+
+Often used for filling in username and password text fields, or search bars.
+
+<br>
+
+```
+fill username "admin"
+```
+
+<br>
+
+### fill_unique (_page element_, _string_prefix_ [default=""], _string_variable_ [default=""])
+Same as ```fill``` but instead creates a unique string in addition to a provided _string_prefix_.
+
+Unlike ```fill```, the string_prefix parameter is optional, and a unique string is automatically sent to the page element.
+Any string provided when you use this command acts as a prefix to whatever unique string is generated by the framework.
+
+In Interactive Mode, if you find that the generated string is _not_ unique, I recommend using the ```clear``` command on the page-element, the use ```fill_unique``` again.
+
+In Automated Mode, if you find that the generated string is _not_ unique, try using it more than once on the same page-element.
+
+<br>
+
+This example will send a unique, nonsensical string to the "result_name" page element, resulting in something like "Q2E3R4"
+```
+fill_unique result_name
+```
+***
+This example will do the same thing, but will prefix the unique string with the provided text, resulting in something like "SomeOutputE93KF0"
+```
+fill_unique result_name "SomeOutput"
+```
+***
+Last, we'll create a unique string and save it to a variable to be used in another command:
+```
+fill_unique result_name "SomeOutput" "unique_str"
+```
+or, to skip the prefix but still generate a variable...
+```
+fill_unique result_name "" "unique_str"
+```
+
+This will allow the "unique_str" command to be used as such:
+```
+fill textbox unique_str
+```
+
+This is useful when a textbox will only behave correctly when it contains a unique string, and you need that string later in the test.
+
+The unique string does not persist beyond a new test session, thus any variables created are not recognized by different test files.
+
+Avoid using existing command names for the unique variable: the unique variable will essentially overwrite existing commands.
+<br>
+
+### enter (_page element_)
+Sends the <ENTER> key to an element.
+
+Sometimes this is more effective than using ```submit```.
+
+<br>
+
+```
+enter submit
+```
+
+<br>
+
+### id (_page element_)
+Flashes the page element yellow for ~2 seconds.
+
+Helps with identifying which element is associated with a page command.
+
+<br>
+
+```id username```
+
+<br>
+
+### refresh
+Refreshes the current page in the browser.
+
+<br>
+
+```refresh```
+
+<br>
+
+### select_item (_page element_, _string_)
+Clicks on an element-- within the provided page element-- whose text property matches that of the string command.
+
+<br>
+
+```select_item drop_down_menu "item one"```
+
+<br>
+
+### single_click_map
+Performs a single-click action on the center of the web map.
+
+Only works on the WebMap page.
+
+<br>
+
+```
+single_click_map
+```
+
+<br>
+
+### submit (_page element_)
+Runs selenium's ```submit``` function on a page element. Using ```enter``` is sometimes preferable if this doesn't work.
+
+<br>
+
+```
+submit search-for-layers
+```
+
+<br>
+
+# Assertion Commands
+
+<br>
+
+### assert_clickable (_page element_, _integer_ [default=5])
+Verify whether the page element is clickable within the given number of seconds.
+
+Includes an optional feature wherein it will attempt the assert action for the provided number of seconds before passing or failing the assertion.
+(Five seconds is used if no _integer_ parameter is provided)
+
+<br>
+
+```
+assert_clickable signin 10
+```
+
+<br>
+
+### assert_credits_required (_text_, _integer_ [default=5])
+Verify that the credit estimator is properly reporting the number of credits required.
+
+The required _text_ parameter should contain the expected _number_ in the pop-up.
+
+<br>
+
+```
+assert_credits_required "0.0042"
+```
+
+<br>
+
+### assert_contains (_page element_, _text_, _integer_ [default=5])
+Verify that the _page element_ contains a sub-element whose text property matches the _text_ pattern.
+(Five seconds is used if no _integer_ parameter is provided)
+
+<br>
+
+```
+assert_contains table-of-contents "GPT Ash1 - Points layer" 2
+```
+
+<br>
+
+### assert_in_toc (_string_)
+Verify that the page element is visible within the table of content on the Web Map page.
+
+<br>
+
+```
+assert_in_toc "GPT Ash1 - Polyons"
+```
+
+<br>
+
+### assert_not_contains (_page element_, _text_, _integer_ [default=5])
+Verify that the _page element_ does not contain a sub-element whose text property matches the _text_ pattern (five seconds is used if no _integer_ parameter is provided).
+
+<br>
+
+```
+assert_not_contains parameter_one "Lines layer" 2
+```
+
+<br>
+
+### assert_text (_page element_, _string_, _integer_ [default=5])
+Verify that the page element's text property matches the provided string (five seconds is used if no _integer_ parameter is provided).
+
+<br>
+
+```
+assert_text username "Bob" 2
+```
+
+<br>
+
+### assert_title (_string_, _integer_ [default=5])
+Checks the current page's title property to verify that it matches the provided string (five seconds is used if no _integer_ parameter is provided).
+
+<br>
+
+```
+assert_title "Red Room" 12
+```
+
+<br>
+
+### assert_total_records (_text_, _integer_ [default=5])
+Verify that the credit estimator is properly reporting the number of records found for processing.
+
+The required _text_ parameter should contain the expected _number_ in the pop-up.
+
+<br>
+
+```
+assert_total_records "42"
+```
+
+<br>
+
+### assert_visible (_page element_, _integer_ [default=5])
+Verify that the page element is visible within the given number of seconds (five seconds is used if no _integer_ parameter is provided).
+
+<br>
+
+```
+assert_visible signin 10
+```
+
+<br>
+
+### assert_not_visible (_page element_, _integer_ [default=5])
+Verify that the page element is not visible within the given number of seconds.
+
+Use this to verify the control is not visible (five seconds is used if no _integer_ parameter is provided).
+
+<br>
+
+```
+assert_not_visible use-traffic 2
+```
+
+<br>
+
+### assert_disabled (_page element_, _integer_ [default=5])
+Verify that the page element is disabled within the given number of seconds (five seconds is used if no _integer_ parameter is provided).
+
+<br>
+
+```
+assert_disabled live-traffic 2
+```
+
+<br>

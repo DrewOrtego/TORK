@@ -1,0 +1,38 @@
+The Portal-UI-Harness is a framework, written entirely in Python, which automates all the mouse-clicks and keystrokes which are normally performed when using a website.
+It uses text-input similar to [text-based computer games](https://www.makeuseof.com/tag/browser-text-based-games/).
+
+TORK's primary purpose is to test the visual component of _ArcGIS Online_ and _ArcGIS for Portal_, however TORK can be used to automate work flows on sites regardless of whether testing is involved or not.
+Writing tests for TORK can help you test a site efficiently and accurately.
+Ultimately, this framework should be helping you avoid having to repeat mundane work flows, thus streamlining your repeatable testing work flows while earning you time to create new ones.
+
+### Why Use TORK?
+TORK breaks up all of its components into three parts, allowing anyone and everyone to contribute to UI testing regardless of their experience level.
+
+#### 1. Test files (no development experience needed)
+TORK leverages test files for repeatable, readable testing work flows.
+Instead of "recording" clicks and keystrokes, test files contain simple text-based commands.
+Those commands are associated with XPath expressions for identifying DOM elements.
+
+#### 2. XPath Commands (zero to minimal XPath development experience required)
+While test files can remain consistent during development of a UI, their associated XPath commands can be updated to accomidate for changes in the DOM.
+This means that a test-file writer doesn't need to update their test file whenever there's a change in the UI.
+Those who work with XPath can edit it as needed, while preserving the command utilized by the test files.
+
+#### 3. TORK's engine/framework (moderate amount of Python dev. experience)
+Python developers can edit the machinations of the framework itself, or add new commands.
+Further compartmentalization allows new commands to be developed in a short amount of time (typically 30-45 min. with testing).
+Leveraging composition paradigms, the command-parsing work flows used by Interactive and Automated mode are easy to understand, and simple in their execution.
+Complete documentation of all functions helps decreases the amount of studying required to make desired changes to TORK, as well as expedites debugging.
+
+### How To Get Started
+If you're brand new to TORK, check out the documentation on [Getting Started](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Starting-Up-and-Requirements).
+It will show you how to start TORK, the system requirements needed, and reveal a few gotya's too.
+
+If you want to start writing new commands (i.e. XPath) for ArcGIS Online or Portal, start with [Writing Commands for Analysis Tools](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-Analysis-Tools).
+
+For a general understanding of how XPath works, check out [Writing XPath for Dojo](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-Page-Elements) since ArcGIS Online and Portal's UI are built using Dojo.
+
+If you need to write new functions for test writers, or want to edit the framework itself, well... there's no documentation for that yet.
+You can learn about the `[``dynamic_element``` attribute](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/The-Dynamic-Element-Attribute) the Page Objects heavily utilize, but the best place to start is [main.py](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/main.py) and walk yourself through the classes and functions which comprise the input/output work flow.
+
+The [Wiki](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki) is the first place to look when you have questions as many tutorials and other resources can be found there.

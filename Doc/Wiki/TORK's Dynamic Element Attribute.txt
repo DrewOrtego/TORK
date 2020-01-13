@@ -1,0 +1,109 @@
+### Introduction
+The [```help```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#help-arbitrary_parameter-choose-one-browser-general-assertion-page-window-or-all) command can be super useful for test writers, but it should inform a user of exactly what they need to know at any given time, no more and no less.
+Since [```PageObjects```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/tree/master/PageObjects) can have hundreds of commands-- some of which are not always visible-- how does the harness report only those commands which are relevant?
+
+The answer: the PageObject's ```dynamic_elements``` attribute.
+
+In the simplest case, the ```dynamic_elements``` dictionary contains key-value pairs of file names and XPath expressions.
+Anytime a command is executed, the framework checks to see if any of the XPath expressions yield a visible element.
+If all the XPath expressions in a value-list are visible, then the commands in the associated file are made available.
+
+There are some very strict requirements to get this feature to work, and understanding how this was written takes a little practice.
+This wiki article will guide you through the process of writing the ```dynamic_elements``` attribute, including a few tricks you can leverage to speed up the coding process.
+
+### The Basics
+When you write a new PageObject, you need to include the ```dynamic_elements``` attribute. This will always start as ```None```, like this:
+
+```python
+self.dynamic_elements = None
+```
+
+When you're ready to start making it do something, it will be a dictionary. It will resemble this format throughout it's development:
+
+
+```
+self.dynamic_elements = {
+    <str: file path>: <str: XPath expression>,
+    <str: file path2>: <str: XPath expression2>,
+    etc.
+}
+```
+
+Notice that the keys and values have some very specific use cases.
+The key is a path to a file, or to be more specific, a module.
+The value is an XPath expression, and can sometimes be more than one.
+
+When the harness receives a command, the current PageObject's ```dynamic_elements``` is checked to see if it is a dict or None.
+If it's a dict, Selenium checks each XPath expression (the dict's values) for visibility.
+
+> This might seem like a time consuming operation, but there are ways to reduce the number of expressions contained in the values.
+Also, the implicit-wait time of driver is set to 0 during this operation.
+This speeds up the look-up time required to iterate through all the XPath expressions.
+
+If all of the expressions yield visible results, then the file path found in the key imports a Python module.
+
+Here's a simple example of that:
+
+```python
+self.dynamic_elements = {
+    "UI_CommandFile": '//div[@id="some_unique_id"]'
+}
+```
+
+In this example, if the specified ```<div>``` element is visible, then all the commands from ```UI_SomeCommands.py``` are made available to the user _until_ that element is no longer visible.
+
+### Dynamic File-Naming
+As previously mentioned, this functionality can really slow things down if it is heavily relied upon.
+Despite the harness doing a few things to speed things up (e.g. setting the webdriver's implicit wait time to 0 seconds) it will inevitably slow down if many XPath expressions are found in the ```dynamic_elements``` value's.
+Fortunately, there's a slick way to avoid that issue.
+
+You can put many modules into a single folder, and use the key-formatting trick to identify only files in that folder.
+This lets you control when the framework searches for a module, and tells the framework which _single_ file to grab from a folder.
+Let's alter the previous example a little bit and demonstrate this.
+
+```python
+self.dynamic_elements = {
+    "PageObjectName\\UI_{0}": ['//div[@id="some_unique_id"]']
+}
+```
+
+What changed? Two things:
+1. The key now has a double backslash and [Python's format](https://pyformat.info/) syntax within it.
+This tells the harness that the file-of-interest is within the _PageObjectName_ folder, which itself is a subfolder inside the [Commands](https://devtopia.esri.com/andr7495/Portal-UI-Harness/tree/master/Commands) directory.
+Note that this subfolder is named after a Page Object file found in the [PageObjects directory](https://devtopia.esri.com/andr7495/Portal-UI-Harness/tree/master/PageObjects).
+This tells the framework to search that folder only if it's name matches the current-page name.
+2. The value is now a list, containing the string we saw earlier.
+Note that the list has a single object.
+Since Python is a zero-indexing language, that means the value's expression is located at index 0 of the list.
+Since the key has Python's format-syntax as a suffix to the file name, the harness recognizes this to mean that it should fill ```{0}``` with the text attribute of the expression's result.
+This means that the XPath expression will have a result when we call ```.text``` on it.
+If the XPath expression fails to return a value from Selenium's ```.text``` attribute, it will fail to find the file to import.
+
+Here's another example:
+
+```python
+self.dynamic_elements = {
+    '{0}\\UI_{1}': [
+        '{}//nav[@class="breadcrumbs" and @data-dojo-attach-point="_analysisModeLblNode"]//a[contains(text(), "Standard Tools")]'.format(self.visible_pane),
+        '{}//nav[@class="breadcrumbs" and @data-dojo-attach-point="_analysisModeLblNode"]//a[2]'.format(self.visible_pane)
+    ],
+}
+```
+
+In this example we see two expressions in the value-list: one for the "Standard Tools" header, and second which gets the name of a "visible_pane" element.
+Note that the key uses both the first and second indexes in the value-list to build a complete file path.
+
+This example is used in the framework's WebMap PageObject.
+Opening an Analysis Tool means that the tool's pane will be visible.
+The header of that pane contains two strings which we want to build our file path with: the category of the tool (i.e. Standard, Raster, etc.), and the name of the tool.
+Designing the file-structure around these two elements means we can run two XPath expressions to obtain info about which tool is currently open.
+This lets us identify over 40 unique tools using just two XPath expressions, as opposed to using 40-80 XPath expressions to identify each one individually.
+That's Python jiu jitsu!
+
+Also note that the "UI_" prefix is affixed to the module name.
+That ensures that the key in dict is unique, which is important if you use this trick a lot.
+
+
+#### Module Naming
+Since module names cannot contain spaces, the harness will automatically strip out the spaces of a module name before it attempts to import that module.
+It is __assumed__ that the key incorporates the module name, either by itself or within a file path, so if you're seeing a lot of SyntaxError's popping up, you probably need to remove spaces from the module name.

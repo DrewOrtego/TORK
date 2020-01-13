@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3>Online Analysis UI Testing Report <a href="https://devtopia.esri.com/andr7495/Portal-UI-Harness"><img src="../static/images/github.png" alt="GitHub Link" height="25" width="25"></a></h3>
+<table class="table table-striped sortable">
+    <tr>
+        <th>Endpoint</th>
+        <th>Username</th>
+        <th>Test Level</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Total Time (min.)</th>
+        <th>Test Report</th>
+    </tr>
+    {% for row in results %}
+    <tr>
+        <td> {{ row[5] }} </td>
+        <td> {{ row[6] }} </td>
+        <td> {{ row[1] }} </td>
+        <td> {{ row[2] }} </td>
+        <td> {{ row[3] }} </td>
+        <td> {{ row[4] }} </td>
+        <td><a href="{{ url_for('tests', session_id=row[0]) }}">Results</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,45 @@
+Since XPath is a string representation of a DOM element, and Python is adept at working with strings, XPath is the language of choice for "codifying" DOM elements.
+A key component of TORK is the obfuscation of long, esoteric XPath-expressions into simple, elegant commands.
+
+For example, writing test files with raw XPath such as...
+```
+//div[contains(@role, "tabpanel") and contains(@class, "dijitVisible")]/tr[@data-dojo-attach-point="_targetLayerRow"]//table[@widgetid[contains(., "dijit_form_Select_")]]
+```
+
+...is daunting, slower, and more prone to error, as opposed to writing:
+```
+target-layer
+```
+
+TORK aims to separate the work load between testers and developers, and representing XPath with simplified commands is the cornerstone to achieving that.
+It would be counterproductive to enforce an understanding of XPath when someone can be just as productive while concentrating on writing test files.
+While writing XPath can be repetitive and mind-numbing at times, the two XPath tutorials in this Wiki serve to expedite the process by helping you focus on specific attributes and design patterns when identifying DOM elements.
+
+### The Basics
+
+If you're unfamiliar with XPath, complete [this tutorial](https://www.w3schools.com/xml/xpath_intro.asp).
+It should take about 15-30 minutes, and you'll be able to read and write simple XPath expressions when you're done.
+
+### Testing XPath in Firefox and Chrome
+
+When writing XPath expressions for TORK, it can be cumbersome to commit an expression to a file and then run TORK only to find that the expression did not locate an element.
+Instead, open the broswer's developer console (with a TORK-generated browser or not, it doesn't matter) and use the following code to execute XPath expressions:
+
+```$x("<XPath expression>")```
+
+Likewise, single quotes and double quotes are interchangeable, so the following modification would yield the same results:
+
+```$x('<XPath expression>')```
+
+[StackOverflow](https://stackoverflow.com/search?q=xpath) has many excellent resources for modifying your XPath expressions to make them as efficient and specific as possible. SO can be used to answer most questions that come up when writing XPath for this framework.
+
+### Recommended XPath-writing Work Flow
+Here is the suggested work flow for creating the XPath for a web element using Firefox or Chrome:
+
+1. Navigate to the page which contains the element, and verify that the element is visible.
+2. Open the browser's developer tools (F12) and click the "pick element" button, located in the upper-left corner.
+3. Hover over the element until you've highlighted the portion of it that you want. Some elements have parts which are not visible to the user, so it is important to be sure you are using this "pick" tool to accurately identify the portion of an element with which Selenium will interact.
+4. Click on the element. You will see its corresponding line of HTML in the DOM appear in the developer tools.
+5. Use this HTML to start building your XPath expression. You might need to expand some parent elements of the one you are interacting with to obtain a unique attribute of the element.
+
+For more detailed information on building XPath expressions, check out the next section, [Writing XPath for ArcGIS Online and Portal](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal)

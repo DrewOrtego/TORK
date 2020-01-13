@@ -1,0 +1,4 @@
+decorator==4.3.0
+flask==0.12.1
+flask_sqlalchemy==2.2
+selenium==3.12.0
