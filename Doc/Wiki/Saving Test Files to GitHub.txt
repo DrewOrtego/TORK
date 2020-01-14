@@ -1,20 +1,20 @@
 Once you have written, tested, and verified that a test file is finished, you are ready to share it with the rest of Esri!
-Test files (and the framework itself) are managed using GitHub, specifically Esri's own in-house enterprise GitHub account, known as DevTopia.
-If you're not familiar with GitHub, check out the resources at the [bottom of this page](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Saving-and-Downloading-Test-Files-on-GitHub#additional-resources) for more info.
+Test files (and the framework itself) are managed using GitHub, specifically Esri's own in-house enterprise GitHub account, known as GitHub.
+If you're not familiar with GitHub, check out the resources at the [bottom of this page](https://github.com/DrewOrtego/TORK/wiki/Saving-and-Downloading-Test-Files-on-GitHub#additional-resources) for more info.
 
 GitHub is confusing if you're not frequently exposed to it, and the idea of using it to maintain your work might sound daunting.
 However, it is an amazing tool which protects developers from accidentally deleting or overwriting their own or another's work, tracking all changes to a project, and organizing otherwise unwieldy projects and tasks.
 
 This guide will teach you the very basics of using GitHub while guiding you through the process of committing your test file(s) to the Portal-UI-Harness project.
-You can apply the knowledge you acquire here to other projects on GitHub and DevTopia as well.
+You can apply the knowledge you acquire here to other projects on GitHub and GitHub as well.
 
 ### Requirements
 
 You'll need a few things to get started:
-* Access to [DevTopia](https://devtopia.esri.com/) (which you probably have if you are reading this guide on DevTopia)
+* Access to [GitHub](https://GitHub.esri.com/) (which you probably have if you are reading this guide on GitHub)
 * A command-line utility for Git. We'll use [Git for Windows](https://gitforwindows.org/)
 
-Talk to your manager if you cannot access the DevTopia links in this tutorial.
+Talk to your manager if you cannot access the GitHub links in this tutorial.
 
 We'll be using a command line interface for Git instead of a GUI utility, so make sure you have one installed.
 
@@ -25,7 +25,7 @@ This tutorial will teach you the high-level concepts needed to use Git in any in
 
 Open your Git CMD program and you should see an empty command prompt, waiting for your input.
 
-![Git CMD](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/nav.PNG)
+![Git CMD](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/nav.PNG)
 
 You'll want to navigate to the folder which will store your own "local" copy of the test file repository.
 Do that now by using Windows Explorer to create the folder "UI-Test-Files".
@@ -33,17 +33,17 @@ Then type ```cd "<path to the directory>"``` into your command prompt, then pres
 
 You should see that the Git CMD prompt is now proceeded by the path to your folder.
 
-![cd](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/createdir.PNG)
+![cd](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/createdir.PNG)
 
 Now we need to tell Git to use that folder to store the content of the repository.
 
 ### Cloning a Project
 
-Login to your DevTopia account and navigate to the [Portal-UI-Test-Files](https://devtopia.esri.com/andr7495/Portal-UI-Test-Files) repository.
+Login to your GitHub account and navigate to the [Portal-UI-Test-Files](https://GitHub.esri.com/DrewOrtego/Portal-UI-Test-Files) repository.
 You'll see a green "Clone or download" button there.
 Click it and select the "Copy to Clipboard" link.
 
-![Copy to Clipboard](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/copyclipboard.png)
+![Copy to Clipboard](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/copyclipboard.png)
 
 Now you have the URL for the repo saved on your "clipboard".
 You can paste it anywhere!
@@ -58,10 +58,10 @@ git clone <paste the URL here>
 Run the command.
 You should see some output as well as a new folder inside your directory, like this:
 
-![Clone](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/clone.PNG)
+![Clone](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/clone.PNG)
 
 If this worked correctly, you've just cloned the project.
-Cloning means you have your own copy of the project, independent of what's on the DevTopia repo.
+Cloning means you have your own copy of the project, independent of what's on the GitHub repo.
 
 To tell Git CMD that you want to work on this project, you need to navigate the Git CMD to the root directory of the project.
 Do that now by running the following into Git CMD:
@@ -70,10 +70,10 @@ Do that now by running the following into Git CMD:
 cd "Portal-UI-Harness"
 ```
 
-![Change Directory](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/cd.PNG)
+![Change Directory](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/cd.PNG)
 
 Now you're ready to makes changes!
-You'll make changes to your cloned copy of the repository, and when you feel those changes are ready to be available to everyone, you'll submit them to the DevTopia repository for approval.
+You'll make changes to your cloned copy of the repository, and when you feel those changes are ready to be available to everyone, you'll submit them to the GitHub repository for approval.
 There are a couple of other things to learn before you can make any changes though.
 
 ### Creating a Branch and Making Changes
@@ -96,7 +96,7 @@ git checkout -b "SignGuestBook"
 This will create a new branch for you called SignGuestBook.
 You should see a message in Git CMD which says:
 
-![Switch Branch](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/branch.PNG)
+![Switch Branch](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/branch.PNG)
 
 We'll use this branch to make changes to the GuestBook.txt file.
 Go ahead and open that file and write anything you like.
@@ -110,14 +110,14 @@ git status
 This will show you any changes that differ from the repository when you cloned it.
 You should see this:
 
-![Git Status](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/status.PNG)
+![Git Status](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/status.PNG)
 
 See how "GuestBook.txt" is red, and how Git CMD calls it a "modified file"?
 Git knows that you made changes to this file, but it is waiting for you to add those changes to the _SignGuestBook_ branch before they can be committed to for pushing.
 
 ### Add, Commit, and Push
 
-Once you've tested your changes and decided to share them on DevTopia, you'll need to add and commit those changes to your branch.
+Once you've tested your changes and decided to share them on GitHub, you'll need to add and commit those changes to your branch.
 Changes cannot be committed until they are added, so we'll do both of those things now.
 
 Type the following into Git CMD to add the changes:
@@ -129,7 +129,7 @@ git add *
 The * notation indicates that you want to add all the untracked changes listed in the output from ```git status```.
 If you run ```git status``` now you should see that the GuestBook.txt file is now green instead of red.
 
-![Add](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/add.PNG)
+![Add](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/add.PNG)
 
 This means that it has been added properly and is ready to be committed to a branch.
 Run the following command to do just that:
@@ -140,12 +140,12 @@ git commit -m "Signed the guest book"
 
 If all went according to plan, you will see this message:
 
-![Git commit](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/commit.PNG)
+![Git commit](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/commit.PNG)
 
-Committing means that the changes are recorded to the repository and can now be pushed to DevTopia.
+Committing means that the changes are recorded to the repository and can now be pushed to GitHub.
 We used the ```-m``` flag (which means "message" or "msg") and provided a useful message which explains the purpose of the commit.
 
-The final step is to push that change to DevTopia.
+The final step is to push that change to GitHub.
 Make it so:
 
 ```
@@ -154,15 +154,15 @@ git push origin SignGuestBook
 
 The output of this result is a little more verbose, but after a few seconds you should see the following:
 
-![Git push](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/push.PNG)
+![Git push](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/push.PNG)
 
 For our final step, open the repository in your browser.
 If all went according to plan, you'll see a new message at the top of the repository telling you that you can open a new Pull Request, like this:
 
-![Open Pull Request](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/openpullreq.PNG)
+![Open Pull Request](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/openpullreq.PNG)
 
 Nice work!
-We're about halfway done; we just have to do a few more things to get these changes into DevTopia and clean up our work.
+We're about halfway done; we just have to do a few more things to get these changes into GitHub and clean up our work.
 
 ### Opening a Pull Request
 
@@ -176,7 +176,7 @@ Both buttons lead to the same page.
 
 You should now be on the "Open a pull request" page, seen here:
 
-![Open a Pull Request](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/openpr1.PNG)
+![Open a Pull Request](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/openpr1.PNG)
 
 You should see the commit message you wrote earlier in the title of the pull request.
 There is also an empty text box here which is perfect for any additional notes you want to make about this change.
@@ -184,12 +184,12 @@ There is also an empty text box here which is perfect for any additional notes y
 It's always a good idea to document your changes so that you can have a digital "paper trail" of them, why you made them, and any "gotya's" or not-immediately-obvious knowledge regarding the changes.
 Let's write a note in there now, something like this:
 
-![Pull Request Notes](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/prnotes.PNG)
+![Pull Request Notes](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/prnotes.PNG)
 
 Next, we need someone to review our changes and approve them.
 To the right of the notes, there's an "Assignees" label with a cog-icon next to it.
-Click the cog-icon, find the username _andr7495_, and click on it to set _andr7495_ as the reviewer of this Pull Request.
-Now click away from the Assignees window and you should see that _andr7495_ has been assigned this Pull Request.
+Click the cog-icon, find the username _DrewOrtego_, and click on it to set _DrewOrtego_ as the reviewer of this Pull Request.
+Now click away from the Assignees window and you should see that _DrewOrtego_ has been assigned this Pull Request.
 
 > The reviewer should get an email about this Pull Request, but if it's an urgent change, feel free to tell them that you've asked for their review.
 
@@ -201,7 +201,7 @@ We now have completed the following steps:
 
 Click the green "Create pull request" button.
 
-![Create Pull Request](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/createpullreq.PNG)
+![Create Pull Request](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/createpullreq.PNG)
 
 A new screen opens with all sorts of new stuff to click on.
 Starting from the top, note that we're in the "Pull requests" tab.
@@ -219,7 +219,7 @@ This helps both you and the assignee (and anyone else involved) organize your di
 
 So we've come full circle now: branches are used to make changes (aka Pull Requests), and GitHub is used to track those changes.
 
-Your next step is to wait for the _andr7495_ to approve your Pull Request, at which time you can merge your changes into the repo.
+Your next step is to wait for the _DrewOrtego_ to approve your Pull Request, at which time you can merge your changes into the repo.
 Go get some coffee, we're almost done!
 
 ### Merging Changes and Deleting Branches
@@ -236,15 +236,15 @@ You're ready to merge your changes for all to see!
 
 Click the green "Merge pull request" button, which will open a confirmation window asking you for any last minute notes, then click "Confirm merge" (also green) to see the changes complete.
 
-![merge](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/merge.PNG)
+![merge](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/merge.PNG)
 
 The merge window will be replaced with a "Pull request successfully merged and closed" message and a "Delete branch" button.
 Go ahead and click on "Delete branch".
 
-![delete](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/deleteui.PNG)
+![delete](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/deleteui.PNG)
 
-The branch that you just deleted existed on DevTopia, not your local machine.
-The changes you made locally are simply reflected in DevTopia, but they're completely independent.
+The branch that you just deleted existed on GitHub, not your local machine.
+The changes you made locally are simply reflected in GitHub, but they're completely independent.
 One of the core concepts of Git is that you are always working on your own _version_ of a repository, and committing changes via a Pull Request.
 
 We can demonstrate this back in Git CMD.
@@ -259,18 +259,18 @@ git branch
 
 Notice the output:
 
-![branch](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/branch2.PNG)
+![branch](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/branch2.PNG)
 
 _SignGuestBook_ is still there.
 Wait, didn't we delete that a second ago!?
-No: we deleted the branch that was on DevTopia.
+No: we deleted the branch that was on GitHub.
 When we used the ```push``` command earlier, we made a copy of the local branch, then merged the copy.
-This implies that you can continue to work on your local changes and push as needed, even while a Pull Request is open on DevTopia.
+This implies that you can continue to work on your local changes and push as needed, even while a Pull Request is open on GitHub.
 
 > People make mistakes, so it's not uncommon for someone to add another change to a Pull Request even after it has been opened.
 In addition, if the reviewer had requested changes to the Pull Request before allowing you to merge it, you would have to make those changes locally, then follow the add, commit, push work flow again to see those changes reflected in the Pull Request.
 
-Now that you can see _SignGuestBook_ is the active branch (it being green and all) we need to mimic what we did on DevTopia and delete it.
+Now that you can see _SignGuestBook_ is the active branch (it being green and all) we need to mimic what we did on GitHub and delete it.
 
 Enter the following into Git CMD:
 
@@ -278,9 +278,9 @@ Enter the following into Git CMD:
 git checkout master
 ```
 
-![checkout](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/checkoutmaster.PNG)
+![checkout](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/checkoutmaster.PNG)
 
-This will switch your active branch to _master_, which as you might have guessed, is also on DevTopia.
+This will switch your active branch to _master_, which as you might have guessed, is also on GitHub.
 You can enter ```git branch``` again if you want to verify that the switch was successful.
 
 Run the following Git command:
@@ -289,9 +289,9 @@ Run the following Git command:
 git pull
 ```
 
-![pull](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/gitpull.PNG)
+![pull](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/gitpull.PNG)
 
-This "pulls" all the changes from the master branch on DevTopia onto your local machine, very similar to the way in which we cloned the master branch at the beginning of the tutorial.
+This "pulls" all the changes from the master branch on GitHub onto your local machine, very similar to the way in which we cloned the master branch at the beginning of the tutorial.
 Now that the changes from _SignGuestBook_ have been merged into _master_, you should see those changes reflected on your local machine.
 Check the GuestBook.txt file and you should see your entry!
 

@@ -40,11 +40,11 @@ This is a behavior of Dojo, but it is easy to work with when tracking down the e
 
 For example, here's what the DOM looks like the first time you open the AP tool:
 
-![DOM Before](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/DOM_before.PNG)
+![DOM Before](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/DOM_before.PNG)
 
 And here is it after closing and opening it again:
 
-![DOM After](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/DOM_after.PNG)
+![DOM After](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/DOM_after.PNG)
 
 Notice the additional ```div``` element, and that the previous one is disabled, as indicated by the "grayed out" display.
 

@@ -15,12 +15,12 @@ This Wiki entry will teach you how the testing works in this harness, and how to
 To make those tests, you must understand the easiest way to design them, and that means utilizing Interactive Mode.
 
 An Interactive Session will help guide you into making logical design choices.
-Refer to the Wiki if you're not familiar with how to run the harness in [Interactive Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#interactive-mode).
+Refer to the Wiki if you're not familiar with how to run the harness in [Interactive Mode](https://github.com/DrewOrtego/TORK/wiki/Testing-Modes#interactive-mode).
 Once you have successfully opened the harness in Interactive Mode, proceed to the next steps.
 
 ### Designing a Test In Interactive Mode
-Now that you're in [Interactive Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#interactive-mode), you can figure out which commands are valid and which are not.
-The [```help```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#help-default_parameter-see-list-of-options) command will tell you which commands are available to you based on the visible elements on a page.
+Now that you're in [Interactive Mode](https://github.com/DrewOrtego/TORK/wiki/Testing-Modes#interactive-mode), you can figure out which commands are valid and which are not.
+The [```help```](https://github.com/DrewOrtego/TORK/wiki/Commands#help-default_parameter-see-list-of-options) command will tell you which commands are available to you based on the visible elements on a page.
 Let's start with the Portal signin page since that's the first one that opens for any type of session.
 Type ```help page``` into the console and press return.
 You should see a list of commands appear, similar to this:
@@ -29,7 +29,7 @@ You should see a list of commands appear, similar to this:
 
 The "Page Commands" listed here refer to commands which are associated with visible elements in the browser's current page.
 (Specifically, the current page's DOM.)
-To find out which element is associated with a command, pick a command from the ones listed by ```help``` and use it with the [```id```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#id-page_element) command.
+To find out which element is associated with a command, pick a command from the ones listed by ```help``` and use it with the [```id```](https://github.com/DrewOrtego/TORK/wiki/Commands#id-page_element) command.
 Try that now with ```id <name of the page command>``` and watch the page immediately after you execute this command.
 Did you see the something flash yellow?
 If so, then you now know which page command is associated with the page element.
@@ -98,7 +98,7 @@ assert_title "Twin Peaks Visitors Guide"
 ```
 
 #### The ```sleep``` Command and Assertion Pinging
-Notice that a new command-- [```sleep```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#sleep-arbitrary_parameter-number-of-seconds) has been added to the test file.
+Notice that a new command-- [```sleep```](https://github.com/DrewOrtego/TORK/wiki/Commands#sleep-arbitrary_parameter-number-of-seconds) has been added to the test file.
 This is used to tell the framework to wait for n-number of seconds before executing the next command.
 In this example, the ```signin``` button will navigate the browser to a new page, and it could potentially take at least five seconds to load.
 Since we don't want the ```assert_title``` command to execute before the navigation is complete, it's good practice to use the ```sleep``` command and retain some control over the framework's decision-making process.

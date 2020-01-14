@@ -42,4 +42,4 @@ Here is the suggested work flow for creating the XPath for a web element using F
 4. Click on the element. You will see its corresponding line of HTML in the DOM appear in the developer tools.
 5. Use this HTML to start building your XPath expression. You might need to expand some parent elements of the one you are interacting with to obtain a unique attribute of the element.
 
-For more detailed information on building XPath expressions, check out the next section, [Writing XPath for ArcGIS Online and Portal](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal)
+For more detailed information on building XPath expressions, check out the next section, [Writing XPath for ArcGIS Online and Portal](https://github.com/DrewOrtego/TORK/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal)

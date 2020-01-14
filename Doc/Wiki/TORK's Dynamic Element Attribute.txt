@@ -1,6 +1,6 @@
 ### Introduction
-The [```help```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#help-arbitrary_parameter-choose-one-browser-general-assertion-page-window-or-all) command can be super useful for test writers, but it should inform a user of exactly what they need to know at any given time, no more and no less.
-Since [```PageObjects```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/tree/master/PageObjects) can have hundreds of commands-- some of which are not always visible-- how does the harness report only those commands which are relevant?
+The [```help```](https://github.com/DrewOrtego/TORK/wiki/Commands#help-arbitrary_parameter-choose-one-browser-general-assertion-page-window-or-all) command can be super useful for test writers, but it should inform a user of exactly what they need to know at any given time, no more and no less.
+Since [```PageObjects```](https://github.com/DrewOrtego/TORK/tree/master/PageObjects) can have hundreds of commands-- some of which are not always visible-- how does the harness report only those commands which are relevant?
 
 The answer: the PageObject's ```dynamic_elements``` attribute.
 
@@ -69,8 +69,8 @@ self.dynamic_elements = {
 
 What changed? Two things:
 1. The key now has a double backslash and [Python's format](https://pyformat.info/) syntax within it.
-This tells the harness that the file-of-interest is within the _PageObjectName_ folder, which itself is a subfolder inside the [Commands](https://devtopia.esri.com/andr7495/Portal-UI-Harness/tree/master/Commands) directory.
-Note that this subfolder is named after a Page Object file found in the [PageObjects directory](https://devtopia.esri.com/andr7495/Portal-UI-Harness/tree/master/PageObjects).
+This tells the harness that the file-of-interest is within the _PageObjectName_ folder, which itself is a subfolder inside the [Commands](https://github.com/DrewOrtego/TORK/tree/master/Commands) directory.
+Note that this subfolder is named after a Page Object file found in the [PageObjects directory](https://github.com/DrewOrtego/TORK/tree/master/PageObjects).
 This tells the framework to search that folder only if it's name matches the current-page name.
 2. The value is now a list, containing the string we saw earlier.
 Note that the list has a single object.
