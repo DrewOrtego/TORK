@@ -69,7 +69,7 @@ Then we set ```self.wait_method``` to ```"visible"``` so that TORK will wait unt
 This syntax is derived from the DOM-representation of the search bar.
 You can check that representation if you open the [IMDb home page](https://www.imdb.com/), right-click the search bar and select "Inspect Element":
 
-![IMAGE NavDOM](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/NavDOM.PNG)
+![IMAGE NavDOM](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/NavDOM.PNG)
 
 ### Adding Commands
 Using the Developer Console's Inspector window, we can dive into the DOM to develop XPath expressions for the elements we want to control.
@@ -87,7 +87,7 @@ If you're unfamiliar with XPath, check this Wiki for tutorial's and best practic
 
 When you run this command, you should get the matching element, like so:
 
-![IMAGE XPathRun](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/XPathRun.PNG)
+![IMAGE XPathRun](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/XPathRun.PNG)
 
 Hover over the result to see the search bar become highlighted.
 That means it's working!
@@ -106,7 +106,7 @@ Use the following parameters to run ```main.py```:
 ```
 
 > If you get an error message, you might not have the webdriver configured correctly.
-Check the [setup Wiki page](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Getting-the-System-Requirements) for more info on how to fix this.
+Check the [setup Wiki page](https://github.com/DrewOrtego/TORK/wiki/Getting-the-System-Requirements) for more info on how to fix this.
 
 Once the IMDb page loads, TORK should recognize it, and you can start the two aforementioned commands.
 Let's quickly test whether TORK recognizes the commands we've created for this page by running the following:
@@ -124,7 +124,7 @@ fill search-bar "Eraserhead"
 
 The search bar should now have the word "Eraserhead" in it, and you'll see some results in the "suggestion" pop-up:
 
-![IMAGE SuggestPopUp](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/SuggestPopUp.PNG)
+![IMAGE SuggestPopUp](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/SuggestPopUp.PNG)
 
 Now tell TORK to click the search button with the following command:
 
@@ -255,13 +255,13 @@ python <path to app.py>
 
 You should see output similar to this:
 
-![IMAGE WebAppConsole](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/WebAppConsole.PNG)
+![IMAGE WebAppConsole](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/WebAppConsole.PNG)
 
 Now open your browser and open a URL formatted with your machine's name as the domain.
 For example, if the machine's name is "TORKRunner", then ```TORKRunner.com``` should now open the web app.
 If all went well you'll see a table with at least one test session listed in it.
 
-![IMAGE WebAppPage](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/Doc/Images/WebAppPage.PNG)
+![IMAGE WebAppPage](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/WebAppPage.PNG)
 
 Explore this page to understand how it conveys information, and start with the "results" link.
 Once you begin to run multiple tests, you'll see how useful it can be to utilize this web app.
@@ -272,7 +272,7 @@ In general, as long as you're not running the web app on a web server, you shoul
 Flask creates its own small server which enables it to run on individual machines, and that should be sufficient for most test sessions.
 
 ### Related Resources
-* [Understanding the Page Object Class](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Page-Object-Class)
-* [Understanding the Dynamic Element Attribute](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Understanding-the-Dynamic-Element-Attribute)
-* [Learning XPath](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Learning-XPath)
-* [Writing XPath for ArcGIS Online and Portal](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal)
+* [Understanding the Page Object Class](https://github.com/DrewOrtego/TORK/wiki/Understanding-the-Page-Object-Class)
+* [Understanding the Dynamic Element Attribute](https://github.com/DrewOrtego/TORK/wiki/Understanding-the-Dynamic-Element-Attribute)
+* [Learning XPath](https://github.com/DrewOrtego/TORK/wiki/Learning-XPath)
+* [Writing XPath for ArcGIS Online and Portal](https://github.com/DrewOrtego/TORK/wiki/Writing-XPath-for-ArcGIS-Online-and-Portal)

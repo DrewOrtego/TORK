@@ -40,7 +40,7 @@ Those are:
 
 #### self.dynamic_elements (dict)
 A dictionary used to import command files as needed.
-There is [extensive documentation](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/The-Dynamic-Element-Attribute) on how this is used.
+There is [extensive documentation](https://github.com/DrewOrtego/TORK/wiki/The-Dynamic-Element-Attribute) on how this is used.
 The dictionary can be empty if there is no need for it.
 Otherwise, each key is paired with a list-type value, which contains XPath-expression strings.
 

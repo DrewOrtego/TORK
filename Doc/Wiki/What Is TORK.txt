@@ -25,14 +25,14 @@ Leveraging composition paradigms, the command-parsing work flows used by Interac
 Complete documentation of all functions helps decreases the amount of studying required to make desired changes to TORK, as well as expedites debugging.
 
 ### How To Get Started
-If you're brand new to TORK, check out the documentation on [Getting Started](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Starting-Up-and-Requirements).
+If you're brand new to TORK, check out the documentation on [Getting Started](https://github.com/DrewOrtego/TORK/wiki/Starting-Up-and-Requirements).
 It will show you how to start TORK, the system requirements needed, and reveal a few gotya's too.
 
-If you want to start writing new commands (i.e. XPath) for ArcGIS Online or Portal, start with [Writing Commands for Analysis Tools](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-Analysis-Tools).
+If you want to start writing new commands (i.e. XPath) for ArcGIS Online or Portal, start with [Writing Commands for Analysis Tools](https://github.com/DrewOrtego/TORK/wiki/Writing-XPath-for-Analysis-Tools).
 
-For a general understanding of how XPath works, check out [Writing XPath for Dojo](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-XPath-for-Page-Elements) since ArcGIS Online and Portal's UI are built using Dojo.
+For a general understanding of how XPath works, check out [Writing XPath for Dojo](https://github.com/DrewOrtego/TORK/wiki/Writing-XPath-for-Page-Elements) since ArcGIS Online and Portal's UI are built using Dojo.
 
 If you need to write new functions for test writers, or want to edit the framework itself, well... there's no documentation for that yet.
-You can learn about the `[``dynamic_element``` attribute](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/The-Dynamic-Element-Attribute) the Page Objects heavily utilize, but the best place to start is [main.py](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/main.py) and walk yourself through the classes and functions which comprise the input/output work flow.
+You can learn about the `[``dynamic_element``` attribute](https://github.com/DrewOrtego/TORK/wiki/The-Dynamic-Element-Attribute) the Page Objects heavily utilize, but the best place to start is [main.py](https://devtopia.esri.com/andr7495/Portal-UI-Harness/blob/master/main.py) and walk yourself through the classes and functions which comprise the input/output work flow.
 
-The [Wiki](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki) is the first place to look when you have questions as many tutorials and other resources can be found there.
+The [Wiki](https://github.com/DrewOrtego/TORK/wiki) is the first place to look when you have questions as many tutorials and other resources can be found there.

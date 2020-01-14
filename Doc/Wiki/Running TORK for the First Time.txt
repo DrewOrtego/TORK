@@ -2,7 +2,7 @@ TORK runs in one of two ways: Interactive or Automated Mode.
 Interactive is used primarily for testing commands before committing them to a test file.
 Automated runs the test files and reports their success or failure.
 
-If you haven't configured your Python installation to run TORK yet, refer to the [Getting Started](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Getting-Started) Wiki page.
+If you haven't configured your Python installation to run TORK yet, refer to the [Getting Started](https://github.com/DrewOrtego/TORK/wiki/Getting-Started) Wiki page.
 
 ### Interactive Mode
 When you begin using TORK for the first time, this is the mode you will want to use.
@@ -26,7 +26,7 @@ Here are a few notes on functionality in Interactive Mode:
 * You can use another instance of a browser at the same time TORK is running. TORK only interacts with the browser which it opens.
 * Since TORK (technically Selenium) opens a new browser, passwords, cookies, and other data are not available to it. Don't expect any settings you've made to your browser to permeate into TORK's temporary instance.
 
-For more information on using Interactive Mode, refer to the tutorial, [Using Interactive Mode to Design and Write Test Files](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files).
+For more information on using Interactive Mode, refer to the tutorial, [Using Interactive Mode to Design and Write Test Files](https://github.com/DrewOrtego/TORK/wiki/Using-Interactive-Mode-to-Design-and-Write-Test-Files).
 
 ### Automated Mode
 This mode is used to run test files which contain commands for TORK.
@@ -57,8 +57,8 @@ Thus, a test file does _not_ require an "assert command" to be considered effect
 In summary, you can include zero-to-many assertions in a test file and have a complete test.
 However, using an assertion can help verify intent within a test file.
 This use of assertions will help you organize all of your tests by purpose, and help you avoid repeating work flows in more than one test file.
-We'll look into this some more in the [Writing and Running Tests](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-and-Running-Tests) section.
+We'll look into this some more in the [Writing and Running Tests](https://github.com/DrewOrtego/TORK/wiki/Writing-and-Running-Tests) section.
 
-For more information on using Automated Mode, refer to the tutorial, [Using Automated Mode to Run Test Files](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Using-Automated-Mode-to-Run-Test-Files).
+For more information on using Automated Mode, refer to the tutorial, [Using Automated Mode to Run Test Files](https://github.com/DrewOrtego/TORK/wiki/Using-Automated-Mode-to-Run-Test-Files).
 
-If you'd like to get started on writing a test file for ArcGIS Online or Portal, refer to the tutorial, [Writing a Complete Sanity Test File](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Writing-a-Complete-Sanity-Test-File#the-completed-test-file).
+If you'd like to get started on writing a test file for ArcGIS Online or Portal, refer to the tutorial, [Writing a Complete Sanity Test File](https://github.com/DrewOrtego/TORK/wiki/Writing-a-Complete-Sanity-Test-File#the-completed-test-file).

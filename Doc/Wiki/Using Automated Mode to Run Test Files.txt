@@ -8,7 +8,7 @@ The following high-level tutorial will teach you how to:
 
 In the last tutorial, you created your first test file.
 The next step is to configure the framework to run that file automatically so that you never have to type it out again.
-This is made possible by running a test in [Automated Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#automated-mode).
+This is made possible by running a test in [Automated Mode](https://github.com/DrewOrtego/TORK/wiki/Testing-Modes#automated-mode).
 Recall that the goal of every test is to run anytime an update is released, ensuring that a work flow functions the same (successful) way in case any unintentional changes (aka bugs) have been implemented.
 
 ### Configuring main.py
@@ -107,6 +107,6 @@ Now is a good time to mention that the framework cannot obfuscate login credenti
 
 ### Wrapping Up
 Once main.py is configured, you can run the framework in automated mode by providing the ```-a``` flag.
-You can [read more about that here](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#automated-mode).
+You can [read more about that here](https://github.com/DrewOrtego/TORK/wiki/Testing-Modes#automated-mode).
 
 Scheduling automated runs is the cornerstone of good testing, so set your system up in anyway you choose to do this, and you'll be alerted of potential bugs ASAP!

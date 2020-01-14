@@ -31,7 +31,7 @@ Additionally, TORK solves quite a few common UI-testing problems:
 ### Minimal test file management
 Many people turn to "automated" test-writing frameworks such as Katalon to record their clicks and keystrokes.
 These frameworks are great for making a quick test without needing to learn a new language, but as soon as a major change is implemented in your UI, the tests need to be re-recorded.
-TORK avoids this extra work and let's you keep your test files in-tact from release to release.
+TORK avoids this extra work and let's you keep your test files in-tact from release to release, so testers never have to update a test file after they create it, even if the UI changes.
 
 ### Tests can remain consistent while changes are implemented in the UI
 Since TORK turns XPath expressions (strings used to find DOM elements) into commands, you can update an XPath expression without changing its associated command.
@@ -41,7 +41,7 @@ In other words, the ```start-button``` XPath can be updated to reflect its curre
 ### Anyone can understand (and write) a test file
 No programming knowledge is required to write a test file.
 If you can understand a text-based game's syntax, you can understand how to write a test file for TORK.
-TORK users have reported a gentle learning curve, and the command-documentation expedites the learning process.
+TORK users have reported a gentle learning curve, and the Wiki documentation expedites the learning process.
 
 ### Straightforward design
 Debugging and developing only requires knowledge of Python, Selenium, and XPath.

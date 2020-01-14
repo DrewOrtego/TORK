@@ -27,15 +27,15 @@ Remember to edit this anytime you update the code in a test!
 
 There are two major differences between AGOL and Portal: the unique pages, and login credentials.
 The framework allows you to create a test file which will work for both environments regardless of these differences.
-Use the [```try_start```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#try_start) and [```try_stop```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#try_stop) functions to encapsulate the unique work flow.
+Use the [```try_start```](https://github.com/DrewOrtego/TORK/wiki/Commands#try_start) and [```try_stop```](https://github.com/DrewOrtego/TORK/wiki/Commands#try_stop) functions to encapsulate the unique work flow.
 Do all the non-unique work flows outside of the try block.
 
 ```
 # Login for AGOL
 try_start
 click index_signin
-fill dlogin_username "sharing"
-fill dlogin_password "ago.test"
+fill dlogin_username "username"
+fill dlogin_password "password"
 click dlogin_signin
 try_stop
 
@@ -49,7 +49,7 @@ sleep 5  # reroute to the Organization page
 Note that we're still documenting the work flow in the test file itself.
 This will help us understand _why_ we have a try-block in case we forget.
 
-This section also contains the [```arg```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#arg_x) command.
+This section also contains the [```arg```](https://github.com/DrewOrtego/TORK/wiki/Commands#arg_x) command.
 Since we want to have this file run on different environments, we'll need to ensure that the file can use different login credentials.
 When you run a test file in Automated Mode, you can provide any string commands unique to a session, and those commands will be assigned an ```arg``` value.
 
@@ -70,7 +70,7 @@ click header-map  # reroute to the WebMap page
 sleep 5
 ```
 
-The [```sleep```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#sleep-arbitrary_parameter-number-of-seconds) command here serves the same purpose as the previous one: to ensure that browser has time to load the new page.
+The [```sleep```](https://github.com/DrewOrtego/TORK/wiki/Commands#sleep-arbitrary_parameter-number-of-seconds) command here serves the same purpose as the previous one: to ensure that browser has time to load the new page.
 Remember that we're _assuming_ the five seconds is sufficient for this.
 If this proves to be too short-- aka the page doesn't finish redirecting or loading-- then the next command will fail.
 Update your test file if this is the case.
@@ -84,14 +84,14 @@ Assuming that the amount ```sleep``` time is enough for the "WebMap" page to loa
 assert_clickable add  # check whether the add button is "clickable" for 5 seconds
 click add
 click search-for-layers
-fill add-textbox "GPT_Ash1"
+fill add-textbox "layer name"
 enter add-textbox
 assert_clickable add-plus-button-first
 click add-plus-button-first  # Assume that the first data set is correct, though it is irrelevant for this test
 sleep 3  # Layer must load in map, else ExtractData is grayed out
 ```
 
-Note the use of an [assertion command](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#assertion-commands) in the first line.
+Note the use of an [assertion command](https://github.com/DrewOrtego/TORK/wiki/Commands#assertion-commands) in the first line.
 Since the ```add``` button is expected to be on the "WebMap" page, it should render itself successfully within the default five seconds the assert will spend on detecting it.
 (We don't use assertions for redirects since they will only check the page which is active when the assertion is called.)
 
@@ -125,10 +125,10 @@ assert_clickable run-analysis
 
 Note that we have another try-block; we'll need to click an extra button when we run this test in Portal.
 Otherwise, the work flow is the same for both enviroments.
-The [```sleep```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#sleep-arbitrary_parameter-number-of-seconds) commands gives us a little extra time for new panes to open.
+The [```sleep```](https://github.com/DrewOrtego/TORK/wiki/Commands#sleep-arbitrary_parameter-number-of-seconds) commands gives us a little extra time for new panes to open.
 Once the final pane is open we can stop using the ```sleep``` commands.
 
-The last command, [```assert_clickable```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#assert_clickable-page_element-integer5) can be swapped with [```click```](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Commands#click-page_element).
+The last command, [```assert_clickable```](https://github.com/DrewOrtego/TORK/wiki/Commands#assert_clickable-page_element-integer5) can be swapped with [```click```](https://github.com/DrewOrtego/TORK/wiki/Commands#click-page_element).
 If either command fails, the framework will tell us.
 It's useful to write asserts as a matter of showing intent, but since this test doesn't need to do anything after clicking the ```run-analysis`` button, we might as well end on an assertion command.
 
@@ -143,8 +143,8 @@ It's useful to write asserts as a matter of showing intent, but since this test 
 # Login for AGOL
 try_start
 click index_signin
-fill dlogin_username "sharing"
-fill dlogin_password "ago.test"
+fill dlogin_username "username"
+fill dlogin_password "password"
 click dlogin_signin
 try_stop
 
@@ -162,7 +162,7 @@ sleep 5
 assert_clickable add  # check whether the add button is "clickable" for 5 seconds
 click add
 click search-for-layers
-fill add-textbox "GPT_Ash1"
+fill add-textbox "layer name"
 enter add-textbox
 assert_clickable add-plus-button-first
 click add-plus-button-first  # Assume that the first data set is correct, though it is irrelevant for this test

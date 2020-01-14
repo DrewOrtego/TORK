@@ -38,4 +38,4 @@ In this case, try using the previous version of your current webdriver.
 
 After the Python libraries and webdriver(s) are installed, run `main.py` to start the program.
 The framework has two modes of operation, and understanding those is vital to using the framework properly.
-[Read about those modes here](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes).
+[Read about those modes here](https://github.com/DrewOrtego/TORK/wiki/Testing-Modes).

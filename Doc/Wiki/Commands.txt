@@ -184,7 +184,7 @@ Commands will throw exceptions again after the ```try_stop``` command.
 
 <br>
 
-The purpose of this is to allow test files (used in [Automated Mode](https://devtopia.esri.com/andr7495/Portal-UI-Harness/wiki/Testing-Modes#automated-mode)) to work for multiple test sites which do not share the same work flows.
+The purpose of this is to allow test files (used in [Automated Mode](https://github.com/DrewOrtego/TORK/wiki/Testing-Modes#automated-mode)) to work for multiple test sites which do not share the same work flows.
 
 <br>
 
