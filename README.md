@@ -11,10 +11,6 @@ TORK is a Python framework which eases the process of creating and automating UI
 The syntax which TORK recognizes is similar to text-based games like Zork, and is easily customized.
 In addition, Python developers with any level of experience can build new commands or edit existing ones by leveraging the intuitive design of TORK.
 
-Console            |  Browser
-:-------------------------:|:-------------------------:
-![GIF of the console](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/console.gif)  |  ![GIF of the browser](https://github.com/DrewOrtego/TORK/blob/master/Doc/Images/browser.gif)
-
 ## Why use TORK?
 The goal of TORK is to ease the process of development as well as test writing.
 TORK compartmentalizes the three components of UI testing:
